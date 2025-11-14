@@ -36,17 +36,18 @@
         // --- Inizializzazione al caricamento ---
         document.addEventListener('DOMContentLoaded', () => {
             initNavbar();
-            initOverlays(); 
+            initOverlays();
             initThemeSwitcher();
             initTiltEffect();
             initDragScroll();
             initCronoAIFeatures();
             initControlCenterWidgets();
-            
+            initCollapsibleMenus();
+
             // Carica accento salvato
             const savedAccent = localStorage.getItem('cronolab-accent') || 'blue';
             document.documentElement.setAttribute('data-accent-color', savedAccent);
-            
+
             navigateTo('home');
         });
 
@@ -557,3 +558,66 @@
                 container.appendChild(ideaElement);
             });
         }
+
+        /* --- MENU COLLAPSIBILI (Articoli & Snippet) --- */
+        function initCollapsibleMenus() {
+            const articlesToggle = document.getElementById('articles-toggle');
+            const articlesSubmenu = document.getElementById('articles-submenu');
+            const snippetsToggle = document.getElementById('snippets-toggle');
+            const snippetsSubmenu = document.getElementById('snippets-submenu');
+
+            if (articlesToggle && articlesSubmenu) {
+                articlesToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    articlesToggle.classList.toggle('active');
+                    articlesSubmenu.classList.toggle('active');
+                });
+            }
+
+            if (snippetsToggle && snippetsSubmenu) {
+                snippetsToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    snippetsToggle.classList.toggle('active');
+                    snippetsSubmenu.classList.toggle('active');
+                });
+            }
+        }
+
+        /* --- MODAL PAYPAL --- */
+        let isPayPalOpen = false;
+        const paypalModal = document.getElementById('paypal-modal-overlay');
+
+        window.openPayPalModal = function() {
+            if (isMenuOpen) closeSideMenu();
+            if (isSettingsOpen) closeControlCenter();
+            if (isAlertOpen) closeAlertModal();
+            paypalModal.classList.add('active');
+            backdrop.classList.add('active');
+            body.classList.add('no-scroll');
+            isPayPalOpen = true;
+        }
+
+        window.closePayPalModal = function() {
+            paypalModal.classList.remove('active');
+            backdrop.classList.remove('active');
+            body.classList.remove('no-scroll');
+            isPayPalOpen = false;
+        }
+
+        // Aggiungi gestione backdrop per PayPal
+        document.addEventListener('DOMContentLoaded', () => {
+            if (backdrop) {
+                const originalBackdropClick = backdrop.onclick;
+                backdrop.addEventListener('click', () => {
+                    if (isPayPalOpen) closePayPalModal();
+                });
+            }
+
+            // Gestione ESC per PayPal
+            const originalKeyDown = document.onkeydown;
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isPayPalOpen) {
+                    closePayPalModal();
+                }
+            });
+        });

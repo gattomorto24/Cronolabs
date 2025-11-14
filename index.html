@@ -155,6 +155,29 @@
     <!-- BACKDROP (Solo per Alert e Side Menu) -->
     <div id="backdrop" class="backdrop"></div>
 
+    <!-- MODAL PAYPAL -->
+    <div id="paypal-modal-overlay" class="modal-overlay">
+        <div class="modal-dialog glass-card">
+            <div class="alert-content">
+                <h3 class="alert-title">Menu Laterale Premium</h3>
+                <p class="alert-message">Acquista il codice sorgente completo del menu laterale animato con effetti glassmorphism.</p>
+                <div style="margin: 20px 0;">
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="tuoemail@example.com">
+                        <input type="hidden" name="item_name" value="Menu Laterale Premium - CronoBlog">
+                        <input type="hidden" name="amount" value="2.00">
+                        <input type="hidden" name="currency_code" value="EUR">
+                        <button type="submit" class="primary-btn" style="width: 100%; margin-bottom: 12px;">Paga con PayPal (2€)</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="alert-btn alert-btn-single" onclick="closePayPalModal()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
     <!-- NUOVO MODAL ALERT DINAMICO -->
     <div id="alert-modal-overlay" class="modal-overlay">
         <div class="modal-dialog glass-card">
@@ -203,6 +226,36 @@
                         </a>
                     </li>
                     <li>
+                        <a class="list-item collapsible-item" id="articles-toggle">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            <span class="list-label">Articoli</span>
+                            <span class="list-chevron chevron-down">&rsaquo;</span>
+                        </a>
+                        <ul class="submenu" id="articles-submenu">
+                            <li><a href="galaxys26ultraleaks.html" class="submenu-item">Galaxy S26 Ultra Leaks</a></li>
+                            <li><a href="iphone17promax.html" class="submenu-item">iPhone 17 Pro Max</a></li>
+                            <li><a href="ai-nel-design.html" class="submenu-item">AI nel Design UI/UX</a></li>
+                            <li><a href="css-container-queries.html" class="submenu-item">CSS Container Queries</a></li>
+                            <li><a href="macos15-features.html" class="submenu-item">macOS 15 Novità</a></li>
+                            <li><a href="react19-released.html" class="submenu-item">React 19 Released</a></li>
+                            <li><a href="glassmorphism-trend.html" class="submenu-item">Futuro del Glassmorphism</a></li>
+                            <li><a href="web-components-2025.html" class="submenu-item">Web Components 2025</a></li>
+                            <li><a href="typescript5-features.html" class="submenu-item">TypeScript 5 Features</a></li>
+                            <li><a href="nextjs15-app-router.html" class="submenu-item">Next.js 15 App Router</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="list-item collapsible-item" id="snippets-toggle">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                            <span class="list-label">Snippet HTML</span>
+                            <span class="list-chevron chevron-down">&rsaquo;</span>
+                        </a>
+                        <ul class="submenu" id="snippets-submenu">
+                            <li><a href="snippet-navbar-free.html" class="submenu-item">Navbar Moderna (Gratis)</a></li>
+                            <li><a href="#" class="submenu-item" onclick="openPayPalModal(); return false;">Menu Laterale Premium (2€)</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a class="list-item" id="open-settings-overlay-btn">
                             <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                             <span class="list-label">Impostazioni</span>
@@ -242,22 +295,84 @@
                 <div class="container">
                     <h2 class="section-title">Articoli Recenti</h2>
                     <div class="post-list-container">
-                        <!-- Template Articolo 1 -->
-                        <a class="post-preview-card glass-card" onclick="navigateTo('post')">
-                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/8A4DFF/FFFFFF?text=Post+1')"></div>
+                        <a class="post-preview-card glass-card" href="galaxys26ultraleaks.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/007AFF/FFFFFF?text=Galaxy+S26+Ultra')"></div>
                             <div class="post-preview-content">
-                                <h3 class="post-preview-title">Il Futuro del Glassmorphism</h3>
-                                <p class="post-preview-excerpt">Un'analisi approfondita su come il blur e la trasparenza stanno definendo la prossima generazione di UI, da VisionOS a iOS 18...</p>
+                                <h3 class="post-preview-title">Galaxy S26 Ultra: Leak e Rumor</h3>
+                                <p class="post-preview-excerpt">Tutte le ultime indiscrezioni sul prossimo flagship Samsung: specifiche tecniche, design rinnovato e data di lancio prevista...</p>
+                                <span class="post-preview-meta">14 Novembre 2025 • 6 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="iphone17promax.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/8A4DFF/FFFFFF?text=iPhone+17+Pro')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">iPhone 17 Pro Max: Cosa Aspettarsi</h3>
+                                <p class="post-preview-excerpt">Apple prepara il salto generazionale: nuovo design, chip A19 Bionic e fotocamera periscopica migliorata...</p>
+                                <span class="post-preview-meta">13 Novembre 2025 • 7 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="ai-nel-design.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/34C759/FFFFFF?text=AI+Design')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">L'AI Rivoluziona il Design UI/UX</h3>
+                                <p class="post-preview-excerpt">Come l'intelligenza artificiale sta cambiando il modo di progettare interfacce: tool, workflow e casi d'uso reali...</p>
+                                <span class="post-preview-meta">12 Novembre 2025 • 8 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="css-container-queries.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/FF9500/FFFFFF?text=CSS+2025')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">CSS Container Queries: La Guida Definitiva</h3>
+                                <p class="post-preview-excerpt">Finalmente disponibili in tutti i browser: scopriamo come usare le Container Queries per un design davvero responsive...</p>
+                                <span class="post-preview-meta">11 Novembre 2025 • 10 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="macos15-features.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/FF3B30/FFFFFF?text=macOS+15')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">macOS 15: Tutte le Novità</h3>
+                                <p class="post-preview-excerpt">Esploriamo le feature più interessanti del nuovo sistema operativo Apple: Continuity migliorata, widget desktop e molto altro...</p>
                                 <span class="post-preview-meta">10 Novembre 2025 • 5 min lettura</span>
                             </div>
                         </a>
-                        <!-- Template Articolo 2 -->
-                        <a class="post-preview-card glass-card" onclick="navigateTo('post')">
-                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/34C759/FFFFFF?text=Post+2')"></div>
+                        <a class="post-preview-card glass-card" href="react19-released.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/007AFF/FFFFFF?text=React+19')"></div>
                             <div class="post-preview-content">
-                                <h3 class="post-preview-title">Perché Usare Variabili CSS</h3>
-                                <p class="post-preview-excerpt">Gestire temi (chiaro, scuro, slate) non è mai stato così facile. Vediamo come il nostro Design System sfrutta la potenza delle variabili CSS...</p>
-                                <span class="post-preview-meta">8 Novembre 2025 • 8 min lettura</span>
+                                <h3 class="post-preview-title">React 19: Le Novità che Cambiano Tutto</h3>
+                                <p class="post-preview-excerpt">Server Components, Actions e il nuovo compilatore: analizziamo le feature rivoluzionarie di React 19...</p>
+                                <span class="post-preview-meta">9 Novembre 2025 • 12 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="glassmorphism-trend.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/8A4DFF/FFFFFF?text=Glassmorphism')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Il Futuro del Glassmorphism</h3>
+                                <p class="post-preview-excerpt">Un'analisi approfondita su come il blur e la trasparenza stanno definendo la prossima generazione di UI, da VisionOS a iOS 18...</p>
+                                <span class="post-preview-meta">8 Novembre 2025 • 5 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="web-components-2025.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/34C759/FFFFFF?text=Web+Components')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Web Components nel 2025</h3>
+                                <p class="post-preview-excerpt">Standard nativi del browser sempre più potenti: quando e perché usare i Web Components invece dei framework...</p>
+                                <span class="post-preview-meta">7 Novembre 2025 • 9 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="typescript5-features.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/FF9500/FFFFFF?text=TypeScript+5')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">TypeScript 5: Le Feature da Conoscere</h3>
+                                <p class="post-preview-excerpt">Decorators ufficiali, performance migliorate e nuovi type utilities: tutto quello che c'è da sapere su TS 5...</p>
+                                <span class="post-preview-meta">6 Novembre 2025 • 8 min lettura</span>
+                            </div>
+                        </a>
+                        <a class="post-preview-card glass-card" href="nextjs15-app-router.html">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/FF3B30/FFFFFF?text=Next.js+15')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Next.js 15 App Router: Guida Completa</h3>
+                                <p class="post-preview-excerpt">Dalla migrazione alle best practice: come sfruttare al meglio il nuovo paradigma di routing di Next.js...</p>
+                                <span class="post-preview-meta">5 Novembre 2025 • 15 min lettura</span>
                             </div>
                         </a>
                     </div>

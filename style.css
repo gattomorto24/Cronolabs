@@ -561,6 +561,38 @@
         .list-chevron { font-size: 20px; color: var(--text-secondary); }
         .list-container .list-item:hover .list-label { color: var(--text-primary); }
 
+        /* Submenu (Menu a tendina) */
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s var(--ease-ios);
+            padding-left: 48px;
+        }
+        .submenu.active {
+            max-height: 600px;
+        }
+        .submenu-item {
+            display: block;
+            padding: 10px 12px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+        .submenu-item:hover {
+            background: var(--bg-control);
+            color: var(--text-primary);
+            padding-left: 16px;
+        }
+        .collapsible-item .chevron-down {
+            transition: transform 0.3s var(--ease-ios);
+        }
+        .collapsible-item.active .chevron-down {
+            transform: rotate(90deg);
+        }
+
 
         /* --- TOAST NOTIFICATIONS --- */
         #toaster-container { 
