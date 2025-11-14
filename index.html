@@ -1,6 +1,18 @@
-    /* <!-- CSS STYLESHEET (Tutto in un unico file) -->
-        /* CRONOBlog STYLE SHEET v4.1
-           Fix: Logica colori con data-accent-color (richiesta utente)
+<!DOCTYPE html>
+<html lang="it" data-accent-color="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CronoBlog - Design Personale</title>
+    
+    <!-- Importazione Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="style.css"> --><!-- Rimosso perché il CSS è inline -->
+</head> <style>    /* <!-- CSS STYLESHEET (Tutto in un unico file) -->
+        /* CRONOBlog STYLE SHEET v5.0
+           Aggiunto: Stili Snippet, Stili Accordion Menu
         */
 
         :root {
@@ -127,7 +139,7 @@
             border-radius: var(--radius-md);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            transition: transform 0.4s var(--ease-ios), box-shadow 0.4s var(--ease-ios);
+            transition: transform 0.4s var(--ease-ios), box-shadow 0.4s var(--ease-ios), border-color 0.3s ease;
             overflow: hidden;
         }
 
@@ -140,8 +152,10 @@
             transition: filter 0.3s var(--ease-ios), transform 0.3s var(--ease-ios);
             transform-origin: top center;
         }
-        .page-content { display: none; animation: fadeIn 0.5s ease forwards; }
-        .page-content.active { display: block; }
+        /* Pagina Home visibile di default */
+        .page-content { display: block; animation: fadeIn 0.5s ease forwards; }
+        
+        /* Rimossa la logica di display:none per SPA, ora gestiamo solo home */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -197,18 +211,58 @@
         .panel-title { font-weight: 700; font-size: 22px; }
         .close-btn { padding: 8px; border-radius: 50%; background: var(--bg-control); transition: 0.2s; display: flex; align-items: center; justify-content: center; }
         .close-btn:hover { background: var(--accent); color: white; }
-        .panel-content { display: flex; flex-direction: column; gap: 30px; }
+        .panel-content { display: flex; flex-direction: column; gap: 30px; overflow-y: auto; }
         .panel-content .list-container { padding: 0; }
         .panel-content .list-item { cursor: pointer; }
         .panel-content .list-item.active { background: var(--bg-control); }
         .panel-content .list-item.active .list-label { color: var(--text-primary); font-weight: 600; }
         .panel-content .list-icon { color: var(--accent); }
-        /* Bottoni Tema (Menu Laterale) - ora servono solo per light/dark */
+        /* Bottoni Tema (Menu Laterale) */
         .theme-buttons { display: flex; gap: 10px; padding: 0 8px; }
         .theme-btn { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--glass-border); font-size: 20px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .theme-btn:hover { transform: scale(1.1); border-color: var(--accent); }
-        #current-theme-label { padding: 0 8px; font-size: 14px; color: var(--text-secondary); }
         
+        /* --- NUOVO: SIDE MENU ACCORDION --- */
+        .menu-accordion .list-item { width: 100%; text-align: left; }
+        .accordion-chevron { 
+            margin-left: auto; 
+            transition: transform 0.3s var(--ease-ios); 
+            font-size: 20px; 
+            color: var(--text-secondary); 
+        }
+        .menu-accordion-trigger.active .accordion-chevron {
+            transform: rotate(90deg);
+        }
+        .submenu-list {
+            list-style: none;
+            max-height: 0;
+            overflow-y: auto; /* Abilita scroll se la lista è troppo lunga */
+            transition: max-height 0.4s var(--ease-ios), padding 0.4s var(--ease-ios);
+            padding-left: 32px; /* Indentazione */
+        }
+        .menu-accordion-trigger.active + .submenu-list {
+            max-height: 300px; /* Altezza massima per far apparire (scrollabile) */
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .submenu-list li a {
+            display: block;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .submenu-list li a:hover {
+            background: var(--bg-control);
+            color: var(--text-primary);
+        }
+
+
         /* --- BACKDROP & MODALS --- */
         .backdrop { 
             position: fixed; inset: 0; 
@@ -219,8 +273,6 @@
             transition: opacity 0.4s; 
         }
         .backdrop.active { opacity: 1; pointer-events: all; }
-        
-        /* Modale di base (overlay) */
         .modal-overlay {
             position: fixed; inset: 0; 
             z-index: 180;
@@ -230,8 +282,6 @@
             transition: opacity 0.3s var(--ease-ios);
         }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
-
-        /* Contenuto del modale (dialog) */
         .modal-dialog {
             min-height: 190px; 
             width: 100%; max-width: 380px;
@@ -241,8 +291,6 @@
             border-radius: var(--radius-lg);
         }
         .modal-overlay.active .modal-dialog { transform: scale(1); }
-        
-        /* Stile interno Alert */
         .alert-content { 
             padding: 24px; 
             text-align: center; 
@@ -253,8 +301,6 @@
         }
         .alert-title { font-size: 20px; font-weight: 700; color: var(--text-primary); }
         .alert-message { font-size: 15px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.4; }
-        
-        /* Footer per bottoni */
         .modal-footer { 
             display: flex; 
             border-top: 1px solid var(--glass-border); 
@@ -268,14 +314,26 @@
         }
         .alert-btn:hover { background: var(--bg-control); }
         .alert-btn.destructive { color: var(--ios-red); font-weight: 700; }
-        
-        /* Stile per coppia di bottoni */
         .alert-btn-pair:not(:last-child) { 
             border-right: 1px solid var(--glass-border); 
         }
-        /* Stile per bottone singolo */
         .alert-btn-single {
             font-weight: 700;
+        }
+        /* Stile per HTML custom (snippet) */
+        .custom-alert-html {
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+        .custom-alert-html pre {
+            text-align: left; 
+            font-size: 13px; 
+            line-height: 1.4; 
+            background: var(--bg-control);
+            padding: 12px; 
+            border-radius: 8px; 
+            overflow-x: auto;
+            border: 1px solid var(--glass-border);
         }
 
 
@@ -341,201 +399,76 @@
         .cc-widget.col-span-2 { grid-column: span 2; }
         .cc-widget.col-span-4 { grid-column: span 4; }
         .cc-widget.row-span-2 { grid-row: span 2; }
-        
-        /* Layout per desktop (4 colonne) */
+
         @media(min-width: 769px) {
-            .cc-grid-container {
-                grid-template-columns: repeat(4, 1fr);
-            }
+            .cc-grid-container { grid-template-columns: repeat(4, 1fr); }
         }
-         /* Layout per tablet (2 colonne) */
         @media(max-width: 768px) {
-            .cc-grid-container {
-                grid-template-columns: repeat(2, 1fr);
-                margin-top: 60px;
-            }
+            .cc-grid-container { grid-template-columns: repeat(2, 1fr); margin-top: 60px; }
             .cc-widget.col-span-2 { grid-column: span 2; }
             .cc-widget.col-span-4 { grid-column: span 2; }
             .cc-widget.row-span-2 { grid-row: span 2; }
         }
 
-        /* Stili Widget Specifici (Aggiornati) */
-        
         /* Widget Selettore Colore */
-        .cc-color-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-        }
+        .cc-color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
         .cc-color-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 80px;
-            border-radius: var(--radius-md);
-            background: var(--bg-control);
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 80px; border-radius: var(--radius-md); background: var(--bg-control);
+            cursor: pointer; transition: all 0.3s; border: 2px solid transparent;
         }
-        .cc-color-btn.active {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-        .cc-color-preview {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-bottom: 8px;
-            border: 2px solid rgba(255,255,255,0.5);
-        }
+        .cc-color-btn.active { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+        .cc-color-preview { width: 24px; height: 24px; border-radius: 50%; margin-bottom: 8px; border: 2px solid rgba(255,255,255,0.5); }
         .cc-color-label { font-size: 13px; font-weight: 600; }
-        
-        /* Widget Slider Verticali (Funzionali) */
-        .cc-v-slider-group {
-            position: relative;
-            width: 100%; 
-            min-width: 60px;
-            height: 100%;
-            min-height: 180px;
-            background: var(--slider-bg);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            flex-direction: column;
-        }
-        .cc-v-slider-icon {
-            font-size: 20px;
-            margin-bottom: 12px;
-            z-index: 2;
-            color: var(--text-primary);
-        }
-        .cc-v-slider-track {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--accent);
-            z-index: 1;
-            transition: height 0.1s;
-        }
-        .cc-v-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: calc(100% - 16px);
-            height: 100%;
-            background: transparent;
-            cursor: pointer;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%) rotate(-90deg);
-            transform-origin: center;
-            z-index: 3;
-        }
-        .cc-v-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            background: transparent;
-            border: none;
-        }
-        .cc-v-slider::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            background: transparent;
-            border: none;
-        }
 
-        /* --- Widget Tema (Stile iOS con Immagini) --- */
+        /* Widget Slider Verticali */
+        .cc-v-slider-group {
+            position: relative; width: 100%; min-width: 60px; height: 100%; min-height: 180px;
+            background: var(--slider-bg); border-radius: var(--radius-lg); overflow: hidden;
+            display: flex; align-items: center; justify-content: flex-end; flex-direction: column;
+        }
+        .cc-v-slider-icon { font-size: 20px; margin-bottom: 12px; z-index: 2; color: var(--text-primary); }
+        .cc-v-slider-track { position: absolute; bottom: 0; left: 0; right: 0; background: var(--accent); z-index: 1; transition: height 0.1s; }
+        .cc-v-slider {
+            -webkit-appearance: none; appearance: none;
+            width: calc(100% - 16px); height: 100%; background: transparent;
+            cursor: pointer; position: absolute; bottom: 0; left: 50%;
+            transform: translateX(-50%) rotate(-90deg); transform-origin: center; z-index: 3;
+        }
+        .cc-v-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; background: transparent; border: none; }
+        .cc-v-slider::-moz-range-thumb { width: 24px; height: 24px; background: transparent; border: none; }
+
+        /* Widget Tema (Stile iOS con Immagini) */
         .cc-theme-widget { display: flex; flex-direction: column; gap: 16px; }
-        .theme-selector-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .theme-preview-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
+        .theme-selector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .theme-preview-btn { display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; }
         .theme-preview-img {
-            width: 100%;
-            height: 275px; 
-            border-radius: var(--radius-md);
-            border: 3px solid var(--theme-preview-stroke);
-            transition: border-color 0.3s;
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
+            width: 100%; height: 275px; border-radius: var(--radius-md);
+            border: 3px solid var(--theme-preview-stroke); transition: border-color 0.3s;
+            position: relative; overflow: hidden; background-size: cover; background-position: center;
         }
-        .theme-preview-btn:hover .theme-preview-img {
-            border-color: var(--accent);
-        }
-        .theme-preview-img-light {
-            background-color: var(--theme-preview-bg);
-            background-image: url('https://i.ibb.co/DHyBXqsy/Chat-GPT-Image-14-nov-2025-14-52-36.png');
-        }
-        .theme-preview-img-dark {
-            background-color: #1C1C1E;
-            background-image: url('https://i.ibb.co/8gYHd8G0/Chat-GPT-Image-14-nov-20925-14-52-36.png');
-        }
-        .theme-radio-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .theme-radio-group label {
-            font-size: 15px;
-            font-weight: 600;
-        }
-        /* Radio button personalizzato */
-        .theme-radio-input {
-            display: none;
-        }
+        .theme-preview-btn:hover .theme-preview-img { border-color: var(--accent); }
+        .theme-preview-img-light { background-image: url('https://i.ibb.co/rG6PXV6h/light.png'); }
+        .theme-preview-img-dark { background-image: url('https://i.ibb.co/B25x7wHr/dark.png'); }
+        .theme-radio-group { display: flex; align-items: center; gap: 8px; }
+        .theme-radio-group label { font-size: 15px; font-weight: 600; }
+        .theme-radio-input { display: none; }
         .radio-check-display {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 2px solid var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--text-secondary);
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s;
         }
         .radio-check-mark {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent);
-            transform: scale(0);
-            transition: transform 0.3s var(--ease-bounce);
+            width: 12px; height: 12px; border-radius: 50%; background: var(--accent);
+            transform: scale(0); transition: transform 0.3s var(--ease-bounce);
         }
-        .theme-radio-input:checked + .radio-check-display {
-            border-color: var(--accent);
-        }
-        .theme-radio-input:checked + .radio-check-display .radio-check-mark {
-            transform: scale(1);
-        }
+        .theme-radio-input:checked + .radio-check-display { border-color: var(--accent); }
+        .theme-radio-input:checked + .radio-check-display .radio-check-mark { transform: scale(1); }
         .theme-preview-btn input:checked + .radio-check-display + .theme-preview-img {
-             border-color: var(--accent);
-             box-shadow: 0 0 15px var(--accent-glow);
+             border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow);
         }
-        /* Disabilitato */
-        .theme-preview-btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
+        .theme-preview-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 
-        /* Widget CronoAI (Rinominato) */
+        /* Widget CronoAI */
         .cc-ai-widget { display: flex; flex-direction: column; gap: 12px; }
         .cc-ai-widget .ai-input { font-size: 14px; padding: 12px; }
         .cc-ai-widget .primary-btn { font-size: 14px; padding: 12px; }
@@ -560,39 +493,6 @@
         .list-label { flex: 1; font-size: 17px; font-weight: 500; color: var(--text-secondary); }
         .list-chevron { font-size: 20px; color: var(--text-secondary); }
         .list-container .list-item:hover .list-label { color: var(--text-primary); }
-
-        /* Submenu (Menu a tendina) */
-        .submenu {
-            list-style: none;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s var(--ease-ios);
-            padding-left: 48px;
-        }
-        .submenu.active {
-            max-height: 600px;
-        }
-        .submenu-item {
-            display: block;
-            padding: 10px 12px;
-            font-size: 15px;
-            color: var(--text-secondary);
-            border-radius: var(--radius-sm);
-            transition: all 0.2s;
-            margin-bottom: 4px;
-        }
-        .submenu-item:hover {
-            background: var(--bg-control);
-            color: var(--text-primary);
-            padding-left: 16px;
-        }
-        .collapsible-item .chevron-down {
-            transition: transform 0.3s var(--ease-ios);
-        }
-        .collapsible-item.active .chevron-down {
-            transform: rotate(90deg);
-        }
-
 
         /* --- TOAST NOTIFICATIONS --- */
         #toaster-container { 
@@ -660,7 +560,7 @@
         .content-section { margin-bottom: 60px; }
         .section-title { font-size: 24px; font-weight: 700; margin-bottom: 20px; }
 
-        /* --- PAGINA: HOME --- */
+        /* --- PAGINA: HOME (Articoli & Snippet) --- */
         .post-list-container { display: grid; grid-template-columns: 1fr; gap: 24px; }
         .post-preview-card { border-radius: var(--radius-lg); display: flex; gap: 24px; padding: 24px; cursor: pointer; }
         .post-preview-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: var(--accent); }
@@ -674,51 +574,66 @@
             .post-preview-image { width: 100%; height: 180px; }
         }
 
-        /* --- PAGINA: ARTICOLO --- */
-        .post-header { padding: 120px 0 40px; text-align: center; border-bottom: 1px solid var(--glass-border); margin-bottom: 40px; }
-        .post-category { font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
-        .post-title { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
-        .post-meta { font-size: 15px; color: var(--text-secondary); }
-        .post-featured-image { width: 100%; height: 400px; background: var(--bg-control); border-radius: var(--radius-lg); margin-bottom: 40px; background-size: cover; background-position: center; }
-        .post-content { font-size: 18px; line-height: 1.7; color: var(--text-primary); }
-        .post-content > * + * { margin-top: 1.5em; }
-        .post-content h2 { font-size: 28px; font-weight: 700; margin-top: 2em; }
-        .post-content h3 { font-size: 22px; font-weight: 700; }
-        .post-content a { color: var(--accent); text-decoration: underline; }
-        .post-content blockquote { padding-left: 20px; border-left: 3px solid var(--accent); color: var(--text-secondary); font-style: italic; font-size: 20px; }
-        .post-content img { max-width: 100%; border-radius: var(--radius-md); }
-
-        /* --- STILI CONTROLLI (Spostati in Control Center) --- */
-        .ai-input {
-            width: 100%;
-            padding: 14px 18px;
-            font-size: 16px;
-            background: var(--bg-control);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+        /* --- NUOVO: SEZIONE SNIPPET --- */
+        .snippet-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
         }
-        .ai-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-        #cronoai-results-container {
+        .snippet-card {
+            border-radius: var(--radius-lg);
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            min-height: 50px;
         }
-        .gemini-idea-item {
-            background: var(--bg-control);
-            padding: 14px 18px;
-            border-radius: var(--radius-md);
-            font-size: 15px;
-            font-weight: 500;
-            border: 1px solid var(--glass-border);
-            animation: fadeIn 0.5s ease forwards;
+        .snippet-card:hover {
+            transform: translateY(-4px); 
+            box-shadow: var(--shadow-card); 
+            border-color: var(--accent);
         }
+        .snippet-card-content {
+            flex-grow: 1;
+        }
+        .snippet-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .snippet-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .snippet-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto; /* Spinge in fondo */
+            padding-top: 16px;
+            border-top: 1px solid var(--glass-border);
+        }
+        .snippet-price {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .snippet-price.free {
+            color: var(--ios-green);
+        }
+        .snippet-price.paid {
+            color: var(--accent);
+        }
+        .snippet-buy-btn {
+            padding-left: 32px;
+            padding-right: 32px;
+        }
+
+
+        /* --- PAGINA: ARTICOLO (RIMOSSA) --- */
+        /* Il .post-header, .post-content, etc. sono stati rimossi 
+           perché ora gli articoli sono file .html separati */
+        .post-header { display: none; }
+        .post-content { display: none; }
 
 
         /* --- FOOTER --- */
@@ -730,3 +645,1042 @@
             position: relative;
             z-index: 2;
         }
+
+    </style>
+<body data-theme="cronolab">
+
+    <!-- ELEMENTI GLOBALI -->
+
+    <!-- NUOVO: Control Center Overlay -->
+    <div id="control-center-overlay" class="control-center-overlay">
+        <!-- Bottone chiusura fisso -->
+        <button id="control-center-close-btn" class="control-center-close-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        
+        <!-- Contenuto scrollabile -->
+        <div id="control-center-content" class="control-center-content">
+            
+            <!-- Griglia Control Center (Layout Riorganizzato v3.5) -->
+            <div class="cc-grid-container">
+                
+                <!-- Row 1: Colore -->
+                <div class="cc-widget col-span-4">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 12px; display: block;">Colore Principale</span>
+                    <div class="cc-color-grid" style="grid-template-columns: repeat(5, 1fr);">
+                        <button class="cc-color-btn" data-color="blue" title="Blu">
+                            <span class="cc-color-preview" style="background-color: var(--accent-blue);"></span>
+                            <span class="cc-color-label">Blu</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="purple" title="Viola">
+                            <span class="cc-color-preview" style="background-color: var(--accent-purple);"></span>
+                            <span class="cc-color-label">Viola</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="green" title="Verde">
+                            <span class="cc-color-preview" style="background-color: var(--accent-green);"></span>
+                            <span class="cc-color-label">Verde</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="orange" title="Arancio">
+                            <span class="cc-color-preview" style="background-color: var(--accent-orange);"></span>
+                            <span class="cc-color-label">Arancio</span>
+                        </button>
+                         <button class="cc-color-btn" data-color="red" title="Rosso">
+                            <span class="cc-color-preview" style="background-color: var(--accent-red);"></span>
+                            <span class="cc-color-label">Rosso</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Row 2+3: Sliders e Tema -->
+                <!-- Widget Slider Luminosità (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <input type="range" min="30" max="100" value="100" class="cc-v-slider" id="cc-slider-brightness" title="Luminosità Pagina">
+                        <div class="cc-v-slider-track" style="height: 100%;"></div>
+                        <span class="cc-v-slider-icon">☀️</span>
+                    </div>
+                </div>
+                
+                <!-- Widget Slider Scala (ex-Volume) (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <!-- Min 0 (Scala 1.0) Max 100 (Scala 0.7) -->
+                        <input type="range" min="0" max="100" value="0" class="cc-v-slider" id="cc-slider-scale" title="Dimensione Contenuti">
+                        <div class="cc-v-slider-track" style="height: 0%;"></div>
+                        <span class="cc-v-slider-icon">🔎</span>
+                    </div>
+                </div>
+                
+                <!-- Widget Tema (Stile iOS) (2x2) -->
+                <div class="cc-widget cc-theme-widget col-span-2 row-span-2">
+                    <span class="panel-subtitle" style="padding: 0;">Aspetto</span>
+                    <div class="theme-selector-grid">
+                        <!-- Opzione Light -->
+                        <label class="theme-preview-btn" for="theme-radio-light">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-light" name="theme-selector" value="light" class="theme-radio-input">
+                                <span class="radio-check-display">
+                                    <span class="radio-check-mark"></span>
+                                </span>
+                                <span class="radio-label">Light</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-light">
+                            </span>
+                        </label>
+                        <!-- Opzione Dark -->
+                        <label class="theme-preview-btn" for="theme-radio-dark">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-dark" name="theme-selector" value="cronolab" class="theme-radio-input">
+                                <span class="radio-check-display">
+                                    <span class="radio-check-mark"></span>
+                                </span>
+                                <span class="radio-label">Dark</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-dark">
+                            </span>
+                        </label>
+                    </div>
+                    <!-- Spostato qui per bilanciare -->
+                    <div class="control-row" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--glass-border);">
+                        <label for="toggle-automatic-theme" class="control-label">Automatico</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-automatic-theme">
+                            <span class="toggle-track"></span>
+                            <span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Row 4: Controlli secondari (Riorganizzati) -->
+                <div class="cc-widget col-span-2">
+                    <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Notifiche</span>
+                     <div class="control-row">
+                        <label for="toggle-alert-mode" class="control-label">Mostra come Alert</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-alert-mode" checked>
+                            <span class="toggle-track"></span>
+                            <span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="cc-widget col-span-2">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Debug</span>
+                    <div class="control-row">
+                        <label class="control-label">Test Alert</label>
+                        <button id="open-alert-btn" class="secondary-btn" style="padding: 8px 16px;">Mostra</button>
+                    </div>
+                </div>
+
+                <!-- Row 5: AI -->
+                <div class="cc-widget cc-ai-widget col-span-4">
+                    <span class="panel-subtitle" style="padding: 0;">CronoAI ✨</span>
+                    <input type="text" id="cronoai-prompt-input" class="ai-input" placeholder="Es: 'Animazioni CSS'">
+                    <button id="cronoai-generate-btn" class="primary-btn">
+                        <span class="btn-text">Genera Idee (CronoAI)</span>
+                        <div class="btn-spinner"></div>
+                    </button>
+                    <div id="cronoai-results-container">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <!-- BACKDROP (Solo per Alert e Side Menu) -->
+    <div id="backdrop" class="backdrop"></div>
+
+    <!-- NUOVO MODAL ALERT DINAMICO -->
+    <div id="alert-modal-overlay" class="modal-overlay">
+        <div class="modal-dialog glass-card">
+            <div id="alert-modal-content" class="alert-content">
+                <h3 id="alert-modal-title" class="alert-title">Titolo Alert</h3>
+                <p id="alert-modal-message" class="alert-message">Messaggio alert.</p>
+            </div>
+            <div id="alert-modal-footer" class="modal-footer">
+                <!-- Bottoni inseriti da JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR (Aggiornata con bottone settings) -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a class="nav-logo" onclick="navigateTo('home')">CronoBlog</a>
+            <div class="nav-buttons-right">
+                <button id="quick-settings-btn" class="nav-menu-btn" aria-label="Apri impostazioni">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+                <button id="menu-toggle-btn" class="nav-menu-btn" aria-label="Apri menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDE MENU (Modificato con Accordion) -->
+    <aside id="side-panel" class="side-panel">
+        <div class="panel-header">
+            <span class="panel-title">Navigazione</span>
+            <button id="close-menu-btn" class="close-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="panel-content">
+            <!-- Blocco Navigazione -->
+            <div class="list-container glass-card">
+                <ul id="side-menu-nav-list" class="settings-list">
+                    <!-- Home (Link SPA) -->
+                    <li>
+                        <a class="list-item" data-page-link="home">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span class="list-label">Home</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                    
+                    <!-- NUOVO: Menu a Tendina Articoli (Link Esterni) -->
+                    <li class="menu-accordion">
+                        <button class="list-item menu-accordion-trigger">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            <span class="list-label">Articoli</span>
+                            <span class="list-chevron accordion-chevron">&rsaquo;</span>
+                        </button>
+                        <ul class="submenu-list">
+                            <li><a href="galaxys26ultraleaks.html">Leak Galaxy S26</a></li>
+                            <li><a href="ios19concept.html">Concept iOS 19</a></li>
+                            <li><a href="m5ultra.html">Chip M5 Ultra</a></li>
+                            <li><a href="visionpro2.html">Vision Pro 2</a></li>
+                            <li><a href="css-api-tricks.html">Nuove API CSS</a></li>
+                            <li><a href="rust-vs-go.html">Rust vs Go</a></li>
+                            <li><a href="ai-devtools.html">AI DevTools</a></li>
+                            <li><a href="metaverse-status.html">Il Metaverso è vivo?</a></li>
+                            <li><a href="qol-updates.html">QoL Updates</a></li>
+                            <li><a href="design-systems.html">Design Systems</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Impostazioni (Link Overlay) -->
+                    <li>
+                        <a class="list-item" id="open-settings-overlay-btn">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span class="list-label">Impostazioni</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Blocco Aspetto (solo emoji, ora sincronizzato) -->
+            <div class.cc-widget>
+                <span class="panel-subtitle">Aspetto</span>
+                <div class="theme-buttons">
+                    <button id="theme-btn-light" class="theme-btn" onclick="setTheme('light')" aria-label="Tema Chiaro">☀️</button>
+                    <button id="theme-btn-dark" class="theme-btn" onclick="setTheme('cronolab')" aria-label="Tema Dark">🌑</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- CONTENITORE TOAST -->
+    <div id="toaster-container"></div>
+
+    <!-- CONTENUTO PAGINA -->
+    <main id="page-container">
+        
+        <!-- PAGINA 1: HOME (Default) -->
+        <div id="page-home" class="page-content active">
+            <!-- Hero -->
+            <header class="hero">
+                <div class="container">
+                    <h1 class="hero-title">CronoBlog</h1>
+                    <p class="hero-subtitle">Esplora i confini tra design e codice. Appunti, esperimenti e devlog.</p>
+                </div>
+            </header>
+            
+            <!-- Lista Articoli (Popolata con link esterni) -->
+            <section class="content-section">
+                <div class="container">
+                    <h2 class="section-title">Articoli Recenti</h2>
+                    <div class="post-list-container">
+                        
+                        <!-- Articolo 1 -->
+                        <a href="galaxys26ultraleaks.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/5E5CE6/FFFFFF?text=Leak')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Galaxy S26 Ultra: Primi Leak</h3>
+                                <p class="post-preview-excerpt">Il frame in titanio di grado 6 e il nuovo sensore "GNK" da 1 pollice. Analizziamo i primi rendering trapelati...</p>
+                                <span class="post-preview-meta">14 Novembre 2025 • 6 min lettura</span>
+                            </div>
+                        </a>
+                        
+                        <!-- Articolo 2 -->
+                        <a href="ios19concept.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/007AFF/FFFFFF?text=Concept')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">iOS 19: Un Concept Rivoluzionario</h3>
+                                <p class="post-preview-excerpt">Widget interattivi di livello 2, IA predittiva e un Centro di Controllo modulare. Il nostro concept in attesa del WWDC.</p>
+                                <span class="post-preview-meta">12 Novembre 2025 • 8 min lettura</span>
+                            </div>
+                        </a>
+                        
+                        <!-- Articolo 3 -->
+                        <a href="m5ultra.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/FF9500/FFFFFF?text=M5+Ultra')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Il Chip M5 Ultra Sconvolge i Benchmark</h3>
+                                <p class="post-preview-excerpt">Processo a 1.5nm, 64 core neurali e una GPU che raddoppia le performance in ray tracing. M5 Ultra è un mostro.</p>
+                                <span class="post-preview-meta">11 Novembre 2025 • 5 min lettura</span>
+                            </div>
+                        </a>
+
+                        <!-- Articolo 4 -->
+                        <a href="visionpro2.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/A2A2A2/000000?text=VisionPro')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Vision Pro 2: Più Leggero, Più Potente</h3>
+                                <p class="post-preview-excerpt">Apple ha risolto i problemi di peso e ha integrato il chip R2 per una latenza quasi zero. Le nostre prime impressioni.</p>
+                                <span class="post-preview-meta">10 Novembre 2025 • 7 min lettura</span>
+                            </div>
+                        </a>
+
+                        <!-- Articolo 5 -->
+                        <a href="css-api-tricks.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/34C759/FFFFFF?text=CSS')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">5 Nuove API CSS che Cambieranno il Web</h3>
+                                <p class="post-preview-excerpt">Da View Transitions a CSS Toggles: il futuro dello styling web è qui e non richiede più JavaScript.</p>
+                                <span class="post-preview-meta">9 Novembre 2025 • 10 min lettura</span>
+                            </div>
+                        </a>
+                        
+                        <!-- Articolo 6 -->
+                        <a href="rust-vs-go.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/F57C00/FFFFFF?text=Rust')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Rust vs Go nel 2026: Quale Scegliere?</h3>
+                                <p class="post-preview-excerpt">Performance pure contro concorrenza semplificata. Un'analisi approfondita per il backend moderno.</p>
+                                <span class="post-preview-meta">7 Novembre 2025 • 12 min lettura</span>
+                            </div>
+                        </a>
+                        
+                        <!-- Articolo 7 -->
+                        <a href="ai-devtools.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/8A4DFF/FFFFFF?text=CronoAI')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">I Migliori DevTool basati su AI</h3>
+                                <p class="post-preview-excerpt">CronoAI è solo l'inizio. Analizziamo Cursor, v0 e altri strumenti che stanno cambiando il modo in cui scriviamo codice.</p>
+                                <span class="post-preview-meta">5 Novembre 2025 • 6 min lettura</span>
+                            </div>
+                        </a>
+                        
+                        <!-- Articolo 8 -->
+                        <a href="metaverse-status.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/00BCD4/FFFFFF?text=VR')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Il Metaverso è (ancora) vivo?</h3>
+                                <p class="post-preview-excerpt">Dopo l'hype e il crollo, lo "spatial computing" sta silenziosamente costruendo la prossima piattaforma. A che punto siamo?</p>
+                                <span class="post-preview-meta">4 Novembre 2025 • 7 min lettura</span>
+                            </div>
+                        </a>
+
+                        <!-- Articolo 9 -->
+                        <a href="qol-updates.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/FF3B30/FFFFFF?text=QoL')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Piccole Modifiche, Grande Impatto (QoL)</h3>
+                                <p class="post-preview-excerpt">A volte non serve una M-series. 10 piccoli aggiornamenti "Quality of Life" che vorrei vedere nel prossimo macOS.</p>
+                                <span class="post-preview-meta">2 Novembre 2025 • 4 min lettura</span>
+                            </div>
+                        </a>
+                        
+                        <!-- Articolo 10 -->
+                        <a href="design-systems.html" class="post-preview-card glass-card">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/C6C6C6/000000?text=Design')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Costruire un Design System (Come CronoBlog)</h3>
+                                <p class="post-preview-excerpt">Dai colori ai componenti, come abbiamo costruito il design system di questo blog da zero usando variabili CSS e data-attributes.</p>
+                                <span class="post-preview-meta">1 Novembre 2025 • 15 min lettura</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+            
+            <!-- NUOVA SEZIONE: SNIPPET HTML -->
+            <section class="content-section">
+                <div class="container">
+                    <h2 class="section-title">Snippet HTML & Componenti</h2>
+                    
+                    <div class="snippet-grid-container">
+                        
+                        <!-- Snippet 1: Gratis -->
+                        <div class="snippet-card glass-card">
+                            <div class="snippet-card-content">
+                                <h3 class="snippet-title">Navbar Glassmorphism</h3>
+                                <p class="snippet-description">
+                                    Una navbar sticky e reattiva con effetto "vetro" che cambia trasparenza allo scroll. Puro CSS e JS leggero.
+                                </p>
+                            </div>
+                            <div class="snippet-footer">
+                                <span class="snippet-price free">Gratis</span>
+                                <button class="secondary-btn" id="snippet-free-btn">Vedi Codice</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Snippet 2: A Pagamento (PayPal) -->
+                        <div class="snippet-card glass-card">
+                            <div class="snippet-card-content">
+                                <h3 class="snippet-title">Side Menu Avanzato</h3>
+                                <p class="snippet-description">
+                                    Il menu laterale completo di questo blog, con logica per temi, accordion e gestione degli overlay.
+                                </p>
+                            </div>
+                            <div class="snippet-footer">
+                                <span class="snippet-price paid">2,00 €</span>
+                                
+                                <!-- Form PayPal -->
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <!-- Identifica il tuo account -->
+                                    <input type="hidden" name="business" value="tua-email-paypal@esempio.com">
+                                    
+                                    <!-- Dettagli item -->
+                                    <input type="hidden" name="item_name" value="Side Menu Avanzato (Snippet HTML/CSS/JS)">
+                                    <input type="hidden" name="amount" value="2.00">
+                                    <input type="hidden" name="currency_code" value="EUR">
+                                    
+                                    <!-- Tipo di azione -->
+                                    <input type="hidden" name="cmd" value="_xclick">
+                                    
+                                    <!-- Bottone personalizzato -->
+                                    <button type="submit" class="primary-btn snippet-buy-btn">Acquista</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGINA 2: ARTICOLO SINGOLO (RIMOSSA) -->
+        <!-- <div id="page-post" class="page-content"> ... </div> -->
+        
+    </main>
+
+    <!-- FOOTER (Globale) -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 CronoBlog. Un esperimento di design.</p>
+        </div>
+    </footer>
+    <script>    /* <!-- JAVASCRIPT (Tutto in un unico file) -->
+        /* CRONOBlog SCRIPT v5.0
+           Modifica: Rimossa logica SPA per post, ora sono link esterni.
+           Aggiunto: Logica Accordion Menu
+           Aggiunto: Logica Snippet Alert
+        */
+        
+        // --- DATABASE ARTICOLI FITTIZIO (RIMOSSO) ---
+        // const mockPostDatabase = { ... };
+
+        // Stato Globale Pagina
+        let currentPage = 'home';
+        
+        // Stato Globale Impostazioni
+        let useAlerts = true;
+        let useSystemTheme = false;
+        const systemThemeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // --- FUNZIONE DI NAVIGAZIONE PRINCIPALE (Semplificata) ---
+        function navigateTo(pageId) {
+            // Questa funzione ora gestisce solo la homepage,
+            // dato che gli articoli sono file .html separati.
+            
+            if (pageId === 'home') {
+                const homePage = document.getElementById('page-home');
+                const allPages = document.querySelectorAll('.page-content');
+                allPages.forEach(p => p.classList.remove('active')); // Nasconde altre pagine (se ce ne fossero)
+                homePage.classList.add('active');
+                currentPage = 'home';
+                window.scrollTo(0, 0);
+            }
+            
+            // Aggiorna stato attivo nel menu laterale
+            const sideMenuNavList = document.getElementById('side-menu-nav-list');
+             if (sideMenuNavList) {
+                sideMenuNavList.querySelectorAll('.list-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-page-link') === pageId) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+            
+            if (isMenuOpen) closeSideMenu();
+        }
+        
+        // --- CARICAMENTO CONTENUTO ARTICOLO (RIMOSSO) ---
+        // function loadPostContent(postId) { ... }
+
+
+        // --- Inizializzazione al caricamento ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavbar();
+            initOverlays(); 
+            initThemeSwitcher();
+            initTiltEffect();
+            // initDragScroll(); // Rimosso perché non ci sono più horizontal scrollers
+            initCronoAIFeatures();
+            initControlCenterWidgets();
+            initSideMenuAccordion(); // Nuovo
+            initSnippetButtons();   // Nuovo
+            
+            // Carica accento salvato
+            const savedAccent = localStorage.getItem('cronolab-accent') || 'blue';
+            document.documentElement.setAttribute('data-accent-color', savedAccent);
+            
+            // Imposta la pagina home come attiva e aggiorna il link del menu
+            document.getElementById('page-home').classList.add('active');
+            const homeLink = document.querySelector('#side-menu-nav-list a[data-page-link="home"]');
+            if (homeLink) homeLink.classList.add('active');
+        });
+
+        // Variabili globali per gli overlay
+        let isMenuOpen = false;
+        let isAlertOpen = false; // Separato da modal
+        let isSettingsOpen = false;
+        
+        const body = document.body;
+        const backdrop = document.getElementById('backdrop');
+        const sidePanel = document.getElementById('side-panel');
+        const alertModal = document.getElementById('alert-modal-overlay');
+        const settingsOverlay = document.getElementById('control-center-overlay');
+
+        // Funzioni di chiusura specifiche
+        function closeSideMenu() {
+            sidePanel.classList.remove('active');
+            if (!isAlertOpen && !isSettingsOpen) { 
+                backdrop.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+            isMenuOpen = false;
+        }
+        
+        function closeAlertModal() {
+            alertModal.classList.remove('active');
+            if (!isMenuOpen && !isSettingsOpen) {
+                backdrop.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+            isAlertOpen = false;
+        }
+        
+        function closeControlCenter() {
+            settingsOverlay.classList.remove('active');
+            if (!isMenuOpen && !isAlertOpen) {
+                body.classList.remove('no-scroll');
+            }
+            isSettingsOpen = false;
+        }
+        
+        function openAlertModal() {
+            if (isMenuOpen) closeSideMenu();
+            if (isSettingsOpen) closeControlCenter();
+            alertModal.classList.add('active');
+            backdrop.classList.add('active');
+            body.classList.add('no-scroll');
+            isAlertOpen = true;
+        }
+
+        /* --- GESTIONE OVERLAYS --- */
+        function initOverlays() {
+            // Bottoni Navbar
+            const menuBtn = document.getElementById('menu-toggle-btn');
+            const quickSettingsBtn = document.getElementById('quick-settings-btn');
+            
+            // Bottoni Side Menu
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const navLinks = document.querySelectorAll('#side-menu-nav-list a[data-page-link]'); // Aggiornato
+            const openSettingsBtn = document.getElementById('open-settings-overlay-btn');
+            
+            // Bottoni Control Center
+            const closeSettingsBtn = document.getElementById('control-center-close-btn');
+            const testAlertBtn = document.getElementById('open-alert-btn'); // Bottone Test Alert
+            
+
+            function openMenu() {
+                if (isAlertOpen) closeAlertModal(); 
+                if (isSettingsOpen) closeControlCenter(); 
+                sidePanel.classList.add('active');
+                backdrop.classList.add('active');
+                body.classList.add('no-scroll');
+                isMenuOpen = true;
+            }
+
+            function openControlCenter() {
+                if (isMenuOpen) closeSideMenu();
+                if (isAlertOpen) closeAlertModal();
+                settingsOverlay.classList.add('active');
+                body.classList.add('no-scroll');
+                isSettingsOpen = true;
+            }
+
+            // Listeners Navbar
+            if (menuBtn) menuBtn.addEventListener('click', openMenu);
+            if (quickSettingsBtn) quickSettingsBtn.addEventListener('click', openControlCenter);
+
+            // Listeners Side Menu
+            if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeSideMenu);
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const pageId = link.getAttribute('data-page-link');
+                    if(pageId) navigateTo(pageId); 
+                });
+            });
+            if (openSettingsBtn) openSettingsBtn.addEventListener('click', openControlCenter);
+            
+            // Listeners Control Center
+            if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', closeControlCenter);
+            if (testAlertBtn) {
+                testAlertBtn.addEventListener('click', () => {
+                     showNotification({
+                        title: 'Test Alert',
+                        message: 'Questo è un alert di test. Se disattivi "Mostra come Alert", diventerà un toast.',
+                        buttons: [
+                            { text: 'Annulla', class: 'secondary' }, 
+                            { text: 'OK', class: 'primary', callback: () => showNotification({ title: 'Successo!', message: 'Callback eseguita.', buttons: [{ text: 'Chiudi'}] }) }
+                        ]
+                    });
+                });
+            }
+
+            // Listener Backdrop
+            if (backdrop) {
+                backdrop.addEventListener('click', () => {
+                    if (isMenuOpen) closeSideMenu();
+                    if (isAlertOpen) closeAlertModal();
+                });
+            }
+            
+            // Listener ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (isAlertOpen) closeAlertModal();
+                    else if (isSettingsOpen) closeControlCenter();
+                    else if (isMenuOpen) closeSideMenu();
+                }
+            });
+        }
+        
+        // --- NUOVO: LOGICA ACCORDION SIDE MENU ---
+        function initSideMenuAccordion() {
+            const triggers = document.querySelectorAll('.menu-accordion-trigger');
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    trigger.classList.toggle('active');
+                });
+            });
+        }
+
+        // --- NUOVO: LOGICA BOTTONI SNIPPET ---
+        function initSnippetButtons() {
+            const freeSnippetBtn = document.getElementById('snippet-free-btn');
+            if (freeSnippetBtn) {
+                freeSnippetBtn.addEventListener('click', () => {
+                    const snippetCode = `
+<pre style="text-align: left; font-size: 13px; line-height: 1.4; background: var(--bg-control); padding: 12px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--glass-border); color: var(--text-primary);">
+&lt;nav id="navbar"&gt;
+  &lt;div class="nav-logo"&gt;MioSito&lt;/div&gt;
+&lt;/nav&gt;
+&lt;style&gt;
+  #navbar {
+    position: sticky; top: 0;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 16px;
+  }
+&lt;/style&gt;
+</pre>
+            `;
+                    showNotification({
+                        title: 'Codice Snippet: Navbar',
+                        message: 'Ecco un esempio base. Copia il codice qui sotto.',
+                        customHtml: snippetCode,
+                        buttons: [{ text: 'OK' }]
+                    });
+                });
+            }
+        }
+
+
+        /* --- Logica Widget Control Center --- */
+        function initControlCenterWidgets() {
+            const pageContainer = document.getElementById('page-container');
+            
+            // Slider Luminosità
+            const brightnessSlider = document.getElementById('cc-slider-brightness');
+            if (brightnessSlider) {
+                const track = brightnessSlider.nextElementSibling;
+                brightnessSlider.addEventListener('input', (e) => {
+                    const value = e.target.value;
+                    track.style.height = `${value}%`;
+                    pageContainer.style.filter = `brightness(${value}%)`;
+                });
+            }
+
+            // Slider Scala Contenuto
+            const scaleSlider = document.getElementById('cc-slider-scale');
+            if (scaleSlider) {
+                const track = scaleSlider.nextElementSibling;
+                scaleSlider.addEventListener('input', (e) => {
+                    const value = e.target.value; // 0 (normal) a 100 (piccolo)
+                    track.style.height = `${value}%`;
+                    const scaleValue = 1.0 - (value / 100) * 0.3; 
+                    pageContainer.style.transform = `scale(${scaleValue})`;
+                });
+            }
+            
+            // Selettore Colore
+            const colorBtns = document.querySelectorAll('.cc-color-btn');
+            const savedAccent = localStorage.getItem('cronolab-accent') || 'blue';
+            
+            let activeBtn = document.querySelector(`.cc-color-btn[data-color="${savedAccent}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+
+            colorBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const colorName = btn.dataset.color;
+                    
+                    document.documentElement.setAttribute('data-accent-color', colorName);
+                    localStorage.setItem('cronolab-accent', colorName);
+                    
+                    colorBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Toggle "Mostra come Alert"
+            const alertModeToggle = document.getElementById('toggle-alert-mode');
+            if (alertModeToggle) {
+                useAlerts = localStorage.getItem('cronolab-use-alerts') !== 'false';
+                alertModeToggle.checked = useAlerts;
+                
+                alertModeToggle.addEventListener('change', (e) => {
+                    useAlerts = e.target.checked;
+                    localStorage.setItem('cronolab-use-alerts', useAlerts);
+                });
+            }
+            
+            // Toggle "Automatico"
+            const autoThemeToggle = document.getElementById('toggle-automatic-theme');
+            const radioLight = document.getElementById('theme-radio-light');
+            const radioDark = document.getElementById('theme-radio-dark');
+            const lightLabel = radioLight.closest('label');
+            const darkLabel = radioDark.closest('label');
+
+            function setAutoThemeState(isAutomatic) {
+                useSystemTheme = isAutomatic;
+                radioLight.disabled = isAutomatic;
+                radioDark.disabled = isAutomatic;
+                lightLabel.classList.toggle('disabled', isAutomatic);
+                darkLabel.classList.toggle('disabled', isAutomatic);
+                
+                if (isAutomatic) {
+                    showNotification({
+                        title: 'Tema Automatico Attivato',
+                        message: 'Il tema si adatterà alle impostazioni del tuo sistema.',
+                        buttons: [{ text: 'OK' }]
+                    });
+                    // Applica immediatamente il tema di sistema
+                    applySystemTheme();
+                } else {
+                     // Ritorna al tema salvato manually
+                    setTheme(localStorage.getItem('cronolab-theme') || 'cronolab');
+                }
+            }
+            
+            if (autoThemeToggle) {
+                // Carica stato (default false)
+                useSystemTheme = localStorage.getItem('cronolab-auto-theme') === 'true';
+                autoThemeToggle.checked = useSystemTheme;
+                setAutoThemeState(useSystemTheme); // Applica stato iniziale
+                
+                autoThemeToggle.addEventListener('change', (e) => {
+                    const isAutomatic = e.target.checked;
+                    localStorage.setItem('cronolab-auto-theme', isAutomatic);
+                    setAutoThemeState(isAutomatic);
+                });
+            }
+        }
+        
+        function applySystemTheme() {
+            if (useSystemTheme) {
+                 setTheme(systemThemeMatcher.matches ? 'cronolab' : 'light', true); // true = non salvare in manuale
+            }
+        }
+        // Listener per cambi tema di sistema
+        systemThemeMatcher.addEventListener('change', applySystemTheme);
+
+
+        /* --- THEME SWITCHER (Logica aggiornata) --- */
+        function initThemeSwitcher() {
+            // Elementi Control Center
+            const radioLight = document.getElementById('theme-radio-light');
+            const radioDark = document.getElementById('theme-radio-dark');
+            
+            // Carica tema salvato
+            const savedTheme = localStorage.getItem('cronolab-theme') || 'cronolab';
+            setTheme(savedTheme, true); // true = inizializzazione
+
+            // Listeners per Control Center
+            if (radioLight) {
+                radioLight.addEventListener('change', () => {
+                    if(radioLight.checked) setTheme('light');
+                });
+            }
+            if (radioDark) {
+                radioDark.addEventListener('change', () => {
+                    if(radioDark.checked) setTheme('cronolab');
+                });
+            }
+        }
+        
+        // Funzione setTheme globale (aggiornata)
+        window.setTheme = function(themeName, isInitialization = false) {
+            document.body.setAttribute('data-theme', themeName);
+            
+            // Salva solo se non è in modalità automatica O se è l'init
+            if (!useSystemTheme || isInitialization) {
+                 localStorage.setItem('cronolab-theme', themeName);
+            }
+
+            // Sincronizza i radio button nel Control Center
+            const radioLight = document.getElementById('theme-radio-light');
+            const radioDark = document.getElementById('theme-radio-dark');
+            
+            if (themeName === 'light') {
+                if (radioLight) radioLight.checked = true;
+            } else {
+                if (radioDark) radioDark.checked = true;
+            }
+        };
+
+        /* --- NAVBAR SCROLL --- */
+        function initNavbar() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 10);
+            });
+        }
+
+        /* --- TILT EFFECT --- */
+        function initTiltEffect() {
+            const cards = document.querySelectorAll('.post-preview-card, .cc-widget, .snippet-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; 
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -4;
+                    const rotateY = ((x - centerX) / centerX) * 4;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+                });
+            });
+        }
+
+        /* --- DRAG TO SCROLL (Svuotato) --- */
+        function initDragScroll() {
+            // Non ci sono più elementi .horizontal-scroll-wrapper
+        }
+
+        /* --- NUOVO SISTEMA DI NOTIFICHE (Aggiornato per HTML) --- */
+        
+        // La nuova funzione principale per le notifiche
+        window.showNotification = function(options) {
+            // options = { title, message, customHtml, buttons: [{ text, class, callback }] }
+            
+            if (useAlerts) {
+                showAlertModal(options);
+            } else {
+                // Se non si usano alert, mostra un semplice toast
+                _showToast(options.message || options.title);
+            }
+        }
+
+        // Funzione interna per mostrare i Toast
+        function _showToast(message) {
+            const container = document.getElementById('toaster-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                toast.addEventListener('animationend', () => toast.remove());
+            }, 3000);
+        }
+        
+        // Funzione interna per mostrare gli Alert dinamici
+        function showAlertModal(options) {
+            const titleEl = document.getElementById('alert-modal-title');
+            const messageEl = document.getElementById('alert-modal-message');
+            const footerEl = document.getElementById('alert-modal-footer');
+            const contentEl = document.getElementById('alert-modal-content');
+            
+            // Rimuovi eventuale HTML custom precedente
+            const oldCustomHtml = contentEl.querySelector('.custom-alert-html');
+            if (oldCustomHtml) oldCustomHtml.remove();
+
+            // Popola titolo e messaggio
+            titleEl.textContent = options.title || 'Notifica';
+            messageEl.textContent = options.message || '';
+            
+            // Aggiungi HTML custom (per lo snippet)
+            if (options.customHtml) {
+                const customEl = document.createElement('div');
+                customEl.className = 'custom-alert-html';
+                customEl.innerHTML = options.customHtml;
+                messageEl.insertAdjacentElement('afterend', customEl);
+            }
+
+            footerEl.innerHTML = '';
+            
+            if (!options.buttons || options.buttons.length === 0) {
+                options.buttons = [{ text: 'OK' }];
+            }
+            
+            options.buttons.forEach(btnData => {
+                const button = document.createElement('button');
+                button.textContent = btnData.text;
+                button.className = 'alert-btn';
+                
+                if (options.buttons.length === 1) {
+                    button.classList.add('alert-btn-single');
+                } else {
+                    button.classList.add('alert-btn-pair');
+                }
+                
+                if (btnData.class === 'destructive') {
+                    button.classList.add('destructive');
+                }
+                
+                button.onclick = () => {
+                    closeAlertModal();
+                    if (btnData.callback && typeof btnData.callback === 'function') {
+                        btnData.callback();
+                    }
+                };
+                footerEl.appendChild(button);
+            });
+            
+            openAlertModal();
+        }
+
+
+        /* --- LOGICA CronoAI (Rinominato) --- */
+        function initCronoAIFeatures() {
+            const generateBtn = document.getElementById('cronoai-generate-btn');
+            const promptInput = document.getElementById('cronoai-prompt-input');
+            if (generateBtn && promptInput) {
+                generateBtn.addEventListener('click', async () => {
+                    const userPrompt = promptInput.value;
+                    if (!userPrompt) {
+                        showNotification({ 
+                            title: 'Input Mancante', 
+                            message: 'Per favore, inserisci un argomento.',
+                            buttons: [{ text: 'OK' }]
+                        });
+                        return;
+                    }
+                    setLoadingState(generateBtn, true);
+                    const systemPrompt = "Sei un editor di un blog di design e tecnologia. Genera 5 titoli creativi per un post basato sull'argomento dell'utente. Restituisci *solo* una lista numerata (es. '1. Titolo...\\n2. Titolo...'), e nient'altro.";
+                    try {
+                        const responseText = await callCronoAI_API(userPrompt, systemPrompt);
+                        displayCronoAIResults(responseText);
+                    } catch (error) {
+                        console.error("Errore chiamata CronoAI:", error);
+                        showNotification({ 
+                            title: 'Errore API', 
+                            message: 'Errore durante la generazione delle idee.',
+                            buttons: [{ text: 'OK' }]
+                        });
+                    } finally {
+                        setLoadingState(generateBtn, false);
+                    }
+                });
+            }
+        }
+        function setLoadingState(button, isLoading) {
+            if (isLoading) {
+                button.classList.add('loading');
+                button.disabled = true;
+            } else {
+                button.classList.remove('loading');
+                button.disabled = false;
+            }
+        }
+        async function callCronoAI_API(userQuery, systemPrompt) {
+            const apiKey = ""; // Lasciato vuoto
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+            const response = await fetchWithRetry(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }, 3);
+            if (!response.ok) throw new Error(`Errore API: ${response.statusText}`);
+            const result = await response.json();
+            if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts[0].text) {
+                return result.candidates[0].content.parts[0].text;
+            } else {
+                throw new Error("Formato risposta API non valido.");
+            }
+        }
+        async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok && response.status === 429) {
+                        throw new Error('Rate limited');
+                    }
+                    return response;
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+        }
+        function displayCronoAIResults(responseText) {
+            const container = document.getElementById('cronoai-results-container');
+            container.innerHTML = '';
+            const ideas = responseText.split('\n')
+                                      .map(line => line.replace(/^\d+\.\s*/, ''))
+                                      .filter(line => line.trim().length > 0);
+            if (ideas.length === 0) {
+                container.innerHTML = '<p class="gemini-idea-item" style="color: var(--text-secondary);">Non sono state trovate idee. Prova un argomento diverso.</p>';
+                return;
+            }
+            ideas.forEach(ideaText => {
+                const ideaElement = document.createElement('div');
+                ideaElement.className = 'gemini-idea-item';
+                ideaElement.textContent = ideaText;
+                container.appendChild(ideaElement);
+            });
+        }
+    </script>
+</body>
+</html>
