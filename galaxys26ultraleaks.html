@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="it" data-accent-color="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titolo specifico per l'articolo -->
+    <title>CronoBlog - Galaxy S26 Ultra: Primi Leak</title>
+    
+    <!-- Importazione Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Collegamento al Foglio di Stile condiviso -->
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body data-theme="cronolab">
+
+    <!-- 
+      ELEMENTI GLOBALI (Copiati da index.html per coerenza)
+      Navbar, Modali, Side Menu, ecc. sono necessari su ogni pagina.
+    -->
+
+    <!-- Control Center Overlay -->
+    <div id="control-center-overlay" class="control-center-overlay">
+        <!-- Bottone chiusura fisso -->
+        <button id="control-center-close-btn" class="control-center-close-btn">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <!-- Contenuto scrollabile -->
+        <div id="control-center-content" class="control-center-content">
+            <!-- Griglia Control Center (Layout Riorganizzato v3.5) -->
+            <div class="cc-grid-container">
+                <!-- Row 1: Colore -->
+                <div class="cc-widget col-span-4">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 12px; display: block;">Colore Principale</span>
+                    <div class="cc-color-grid" style="grid-template-columns: repeat(5, 1fr);">
+                        <button class="cc-color-btn" data-color="blue" title="Blu">
+                            <span class="cc-color-preview" style="background-color: var(--accent-blue);"></span>
+                            <span class="cc-color-label">Blu</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="purple" title="Viola">
+                            <span class="cc-color-preview" style="background-color: var(--accent-purple);"></span>
+                            <span class="cc-color-label">Viola</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="green" title="Verde">
+                            <span class="cc-color-preview" style="background-color: var(--accent-green);"></span>
+                            <span class="cc-color-label">Verde</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="orange" title="Arancio">
+                            <span class="cc-color-preview" style="background-color: var(--accent-orange);"></span>
+                            <span class="cc-color-label">Arancio</span>
+                        </button>
+                         <button class="cc-color-btn" data-color="red" title="Rosso">
+                            <span class="cc-color-preview" style="background-color: var(--accent-red);"></span>
+                            <span class="cc-color-label">Rosso</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Widget Slider Luminosità (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <input type="range" min="30" max="100" value="100" class="cc-v-slider" id="cc-slider-brightness" title="Luminosità Pagina">
+                        <div class="cc-v-slider-track" style="height: 100%;"></div>
+                        <span class="cc-v-slider-icon">☀️</span>
+                    </div>
+                </div>
+                <!-- Widget Slider Scala (ex-Volume) (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <input type="range" min="0" max="100" value="0" class="cc-v-slider" id="cc-slider-scale" title="Dimensione Contenuti">
+                        <div class="cc-v-slider-track" style="height: 0%;"></div>
+                        <span class="cc-v-slider-icon">🔎</span>
+                    </div>
+                </div>
+                <!-- Widget Tema (Stile iOS) (2x2) -->
+                <div class="cc-widget cc-theme-widget col-span-2 row-span-2">
+                    <span class="panel-subtitle" style="padding: 0;">Aspetto</span>
+                    <div class="theme-selector-grid">
+                        <label class="theme-preview-btn" for="theme-radio-light">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-light" name="theme-selector" value="light" class="theme-radio-input">
+                                <span class="radio-check-display"><span class="radio-check-mark"></span></span>
+                                <span class="radio-label">Light</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-light"></span>
+                        </label>
+                        <label class="theme-preview-btn" for="theme-radio-dark">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-dark" name="theme-selector" value="cronolab" class="theme-radio-input">
+                                <span class="radio-check-display"><span class="radio-check-mark"></span></span>
+                                <span class="radio-label">Dark</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-dark"></span>
+                        </label>
+                    </div>
+                    <div class="control-row" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--glass-border);">
+                        <label for="toggle-automatic-theme" class="control-label">Automatico</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-automatic-theme">
+                            <span class="toggle-track"></span><span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+                <!-- Controlli secondari -->
+                <div class="cc-widget col-span-2">
+                    <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Notifiche</span>
+                     <div class="control-row">
+                        <label for="toggle-alert-mode" class="control-label">Mostra come Alert</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-alert-mode" checked>
+                            <span class="toggle-track"></span><span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cc-widget col-span-2">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Debug</span>
+                    <div class="control-row">
+                        <label class="control-label">Test Alert</label>
+                        <button id="open-alert-btn" class="secondary-btn" style="padding: 8px 16px;">Mostra</button>
+                    </div>
+                </div>
+                <!-- AI -->
+                <div class="cc-widget cc-ai-widget col-span-4">
+                    <span class="panel-subtitle" style="padding: 0;">CronoAI ✨</span>
+                    <input type="text" id="cronoai-prompt-input" class="ai-input" placeholder="Es: 'Animazioni CSS'">
+                    <button id="cronoai-generate-btn" class="primary-btn">
+                        <span class="btn-text">Genera Idee (CronoAI)</span>
+                        <div class="btn-spinner"></div>
+                    </button>
+                    <div id="cronoai-results-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Backdrop (per Alert e Side Menu) -->
+    <div id="backdrop" class="backdrop"></div>
+    
+    <!-- Modale Alert Dinamico -->
+    <div id="alert-modal-overlay" class="modal-overlay">
+        <div class="modal-dialog glass-card">
+            <div id="alert-modal-content" class="alert-content">
+                <h3 id="alert-modal-title" class="alert-title">Titolo Alert</h3>
+                <p id="alert-modal-message" class="alert-message">Messaggio alert.</p>
+            </div>
+            <div id="alert-modal-footer" class="modal-footer">
+                <!-- Bottoni inseriti da JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <!-- Modificato: link a index.html -->
+            <a class="nav-logo" href="index.html">CronoBlog</a>
+            <div class="nav-buttons-right">
+                <button id="quick-settings-btn" class="nav-menu-btn" aria-label="Apri impostazioni">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+                <button id="menu-toggle-btn" class="nav-menu-btn" aria-label="Apri menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Side Menu (con menu a tendina) -->
+    <aside id="side-panel" class="side-panel">
+        <div class="panel-header">
+            <span class="panel-title">Navigazione</span>
+            <button id="close-menu-btn" class="close-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="panel-content">
+            <!-- Blocco Navigazione -->
+            <div class="list-container glass-card">
+                <ul id="side-menu-nav-list" class="settings-list">
+                    <!-- Home (Link a index.html) -->
+                    <li>
+                        <a class="list-item" href="index.html">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span class="list-label">Home</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                    
+                    <!-- Menu a Tendina Articoli (Link Esterni) -->
+                    <li class="menu-accordion">
+                        <button class="list-item menu-accordion-trigger">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            <span class="list-label">Articoli</span>
+                            <span class="list-chevron accordion-chevron">&rsaquo;</span>
+                        </button>
+                        <ul class="submenu-list">
+                            <li><a href="galaxys26ultraleaks.html">Leak Galaxy S26</a></li>
+                            <li><a href="ios19concept.html">Concept iOS 19</a></li>
+                            <li><a href="m5ultra.html">Chip M5 Ultra</a></li>
+                            <li><a href="visionpro2.html">Vision Pro 2</a></li>
+                            <li><a href="css-api-tricks.html">Nuove API CSS</a></li>
+                            <li><a href="rust-vs-go.html">Rust vs Go</a></li>
+                            <li><a href="ai-devtools.html">AI DevTools</a></li>
+                            <li><a href="metaverse-status.html">Il Metaverso è vivo?</a></li>
+                            <li><a href="qol-updates.html">QoL Updates</a></li>
+                            <li><a href="design-systems.html">Design Systems</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Impostazioni (Link Overlay) -->
+                    <li>
+                        <a class="list-item" id="open-settings-overlay-btn">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span class="list-label">Impostazioni</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Blocco Aspetto -->
+            <div class.cc-widget>
+                <span class="panel-subtitle">Aspetto</span>
+                <div class="theme-buttons">
+                    <button id="theme-btn-light" class="theme-btn" onclick="setTheme('light')" aria-label="Tema Chiaro">☀️</button>
+                    <button id="theme-btn-dark" class="theme-btn" onclick="setTheme('cronolab')" aria-label="Tema Dark">🌑</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Contenitore Toast -->
+    <div id="toaster-container"></div>
+
+    <!-- 
+      CONTENUTO PAGINA 
+      Questa è la sezione specifica per questo file.
+    -->
+    <main id="page-container">
+        
+        <!-- PAGINA ARTICOLO SINGOLO -->
+        <div id="page-post" class="page-content active">
+            <article class="post-container">
+                
+                <!-- Header Articolo -->
+                <header class="post-header">
+                    <div class="container">
+                        <!-- Link per tornare a index.html -->
+                        <a class="back-link" href="index.html">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            Tutti gli Articoli
+                        </a>
+                        <span class="post-category">Hardware Leaks</span>
+                        <h1 class="post-title">Galaxy S26 Ultra: Primi Leak</h1>
+                        <span class="post-meta">Scritto da CronoBlog • 14 Novembre 2025</span>
+                    </div>
+                </header>
+                
+                <!-- Contenuto Articolo -->
+                <div class="container">
+                    
+                    <!-- Immagine Principale (dal tuo link) -->
+                    <div class="post-featured-image" style="background-image: url('https://m-cdn.phonearena.com/images/article/175686-wide-two_1200/Galaxy-S26-Ultras-camera-may-change-in-ten-important-ways.jpg'); background-position: center;"></div>
+                    
+                    <!-- Corpo dell'articolo -->
+                    <div class="post-content">
+                        <p>L'attesa è finita. I primi rendering CAD del <strong>Galaxy S26 Ultra</strong> sono apparsi online, svelando un design che affina la formula e una configurazione della fotocamera che promette di ridefinire il settore. Basandoci sui leak di noti insider e sulle immagini trapelate, analizziamo cosa aspettarci dal prossimo flagship Samsung.</p>
+                        
+                        <h2>Design, Display e... Arancione?</h2>
+                        <p>Il cambiamento più visibile rispetto al predecessore sembra essere un ritorno a linee più morbide. Addio agli spigoli vivi del S25 Ultra, bentornati bordi più arrotondati, una scelta che punta chiaramente a migliorare l'ergonomia. I rendering (come quello qui sotto) mostrano anche una nuova colorazione "Arancione", oltre a un telaio in <strong>Titanio di Grado 6</strong>, ancora più resistente.</p>
+                        
+                        <!-- Seconda Immagine (dal tuo link) -->
+                        <img src="https://www.sammyfans.com/wp-content/uploads/2025/11/s26-plus-orange.jpg" alt="Galaxy S26 Plus Arancione" style="border-radius: var(--radius-md); max-width: 100%; height: auto;">
+                        
+                        <p>Il display rimarrà un pannello AMOLED da 6.9 pollici completamente piatto, ma i rumor indicano una luminosità di picco sbalorditiva, capace di raggiungere i <strong>4000 nits</strong>, e l'integrazione di "Galaxy AI 2.0" per ottimizzare i colori in tempo reale.</p>
+
+                        <h2>Il Piatto Forte: La Fotocamera</h2>
+                        <p>Qui le cose si fanno serie. L'immagine in copertina (via PhoneArena) suggerisce un modulo fotocamera ridisegnato. I leak più insistenti parlano di un sensore principale da 200MP, ma la vera novità risiede nei sensori secondari:</p>
+                        
+                        <blockquote>Si parla di un nuovo sensore <strong>ultra-grandangolare da 50MP</strong> e, soprattutto, di un <strong>nuovo teleobiettivo periscopico da 50MP con zoom ottico 5x</strong>, che andrebbe a sostituire la vecchia (e meno performante) unità 10x.</blockquote>
+                        
+                        <p>Questo, combinato con un teleobiettivo 3x migliorato, offrirebbe una flessibilità e una qualità d'immagine molto più coerente tra i vari livelli di zoom.</p>
+
+                        <h2>Performance: UFS 5.0 e Snapdragon 8 Gen 5</h2>
+                        <p>Sotto il cofano, non ci sono sorprese: troveremo il non ancora annunciato <strong>Snapdragon 8 Gen 5 (Elite)</strong>, affiancato da memorie RAM LPDDR6. La vera chicca, però, potrebbe essere l'archiviazione: il Galaxy S26 Ultra sarà probabilmente il primo smartphone a implementare lo standard <strong>UFS 5.0</strong>, promettendo velocità di lettura e scrittura quasi doppie rispetto alla generazione attuale.</p>
+                        
+                        <ul>
+                            <li><strong>Processore:</strong> Snapdragon 8 Gen 5 (Elite) / Exynos 2600</li>
+                            <li><strong>Storage:</strong> UFS 5.0 (fino a 1TB)</li>
+                            <li><strong>RAM:</strong> 16GB LPDDR6</li>
+                            <li><strong>Batteria:</strong> 5.000 mAh (con possibile ricarica a 60W)</li>
+                        </ul>
+
+                        <p>Il Galaxy S26 Ultra si preannuncia come un aggiornamento sostanziale. Con un focus su fotocamere più bilanciate e performance AI di nuova generazione, Samsung si prepara a una battaglia epica per il titolo di "Re degli Smartphone" nel 2026.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+    </main>
+
+    <!-- Footer (Globale) -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 CronoBlog. Un esperimento di design.</p>
+        </div>
+    </footer>
+
+    <!-- 
+      Collegamento allo Script 
+      Questo script è necessario per far funzionare:
+      - Navbar, Side Menu, Control Center
+      - Logica dei Temi e dei Colori
+      - Funzionalità dei widget (slider, toggle)
+      - Sistema di Notifiche (Alert/Toast)
+      - CronoAI
+    -->
+    <script src="script.js"></script>
+    
+</body>
+</html>
