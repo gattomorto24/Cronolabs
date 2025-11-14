@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="it" data-accent-color="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titolo specifico per l'articolo -->
+    <title>CronoBlog - iOS 26 e il Dilemma "Liquid Glass"</title>
+    
+    <!-- Importazione Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Collegamento al Foglio di Stile condiviso -->
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body data-theme="cronolab">
+
+    <!-- 
+      ELEMENTI GLOBALI (Copiati da index.html per coerenza)
+    -->
+
+    <!-- Control Center Overlay -->
+    <div id="control-center-overlay" class="control-center-overlay">
+        <!-- Bottone chiusura fisso -->
+        <button id="control-center-close-btn" class="control-center-close-btn">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <!-- Contenuto scrollabile -->
+        <div id="control-center-content" class="control-center-content">
+            <!-- Griglia Control Center -->
+            <div class="cc-grid-container">
+                <!-- Row 1: Colore -->
+                <div class="cc-widget col-span-4">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 12px; display: block;">Colore Principale</span>
+                    <div class="cc-color-grid" style="grid-template-columns: repeat(5, 1fr);">
+                        <button class="cc-color-btn" data-color="blue" title="Blu">
+                            <span class="cc-color-preview" style="background-color: var(--accent-blue);"></span>
+                            <span class="cc-color-label">Blu</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="purple" title="Viola">
+                            <span class="cc-color-preview" style="background-color: var(--accent-purple);"></span>
+                            <span class="cc-color-label">Viola</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="green" title="Verde">
+                            <span class="cc-color-preview" style="background-color: var(--accent-green);"></span>
+                            <span class="cc-color-label">Verde</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="orange" title="Arancio">
+                            <span class="cc-color-preview" style="background-color: var(--accent-orange);"></span>
+                            <span class="cc-color-label">Arancio</span>
+                        </button>
+                         <button class="cc-color-btn" data-color="red" title="Rosso">
+                            <span class="cc-color-preview" style="background-color: var(--accent-red);"></span>
+                            <span class="cc-color-label">Rosso</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Widget Slider Luminosità (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <input type="range" min="30" max="100" value="100" class="cc-v-slider" id="cc-slider-brightness" title="Luminosità Pagina">
+                        <div class="cc-v-slider-track" style="height: 100%;"></div>
+                        <span class="cc-v-slider-icon">☀️</span>
+                    </div>
+                </div>
+                <!-- Widget Slider Scala (ex-Volume) (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <input type="range" min="0" max="100" value="0" class="cc-v-slider" id="cc-slider-scale" title="Dimensione Contenuti">
+                        <div class="cc-v-slider-track" style="height: 0%;"></div>
+                        <span class="cc-v-slider-icon">🔎</span>
+                    </div>
+                </div>
+                <!-- Widget Tema (Stile iOS) (2x2) -->
+                <div class="cc-widget cc-theme-widget col-span-2 row-span-2">
+                    <span class="panel-subtitle" style="padding: 0;">Aspetto</span>
+                    <div class="theme-selector-grid">
+                        <label class="theme-preview-btn" for="theme-radio-light">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-light" name="theme-selector" value="light" class="theme-radio-input">
+                                <span class="radio-check-display"><span class="radio-check-mark"></span></span>
+                                <span class="radio-label">Light</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-light"></span>
+                        </label>
+                        <label class="theme-preview-btn" for="theme-radio-dark">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-dark" name="theme-selector" value="cronolab" class="theme-radio-input">
+                                <span class="radio-check-display"><span class="radio-check-mark"></span></span>
+                                <span class="radio-label">Dark</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-dark"></span>
+                        </label>
+                    </div>
+                    <div class="control-row" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--glass-border);">
+                        <label for="toggle-automatic-theme" class="control-label">Automatico</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-automatic-theme">
+                            <span class="toggle-track"></span><span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+                <!-- Controlli secondari -->
+                <div class="cc-widget col-span-2">
+                    <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Notifiche</span>
+                     <div class="control-row">
+                        <label for="toggle-alert-mode" class="control-label">Mostra come Alert</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-alert-mode" checked>
+                            <span class="toggle-track"></span><span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="cc-widget col-span-2">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Debug</span>
+                    <div class="control-row">
+                        <label class="control-label">Test Alert</label>
+                        <button id="open-alert-btn" class="secondary-btn" style="padding: 8px 16px;">Mostra</button>
+                    </div>
+                </div>
+                <!-- AI -->
+                <div class="cc-widget cc-ai-widget col-span-4">
+                    <span class="panel-subtitle" style="padding: 0;">CronoAI ✨</span>
+                    <input type="text" id="cronoai-prompt-input" class="ai-input" placeholder="Es: 'Animazioni CSS'">
+                    <button id="cronoai-generate-btn" class="primary-btn">
+                        <span class="btn-text">Genera Idee (CronoAI)</span>
+                        <div class="btn-spinner"></div>
+                    </button>
+                    <div id="cronoai-results-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Backdrop (per Alert e Side Menu) -->
+    <div id="backdrop" class="backdrop"></div>
+    
+    <!-- Modale Alert Dinamico -->
+    <div id="alert-modal-overlay" class="modal-overlay">
+        <div class="modal-dialog glass-card">
+            <div id="alert-modal-content" class="alert-content">
+                <h3 id="alert-modal-title" class="alert-title">Titolo Alert</h3>
+                <p id="alert-modal-message" class="alert-message">Messaggio alert.</p>
+            </div>
+            <div id="alert-modal-footer" class="modal-footer">
+                <!-- Bottoni inseriti da JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <!-- Modificato: link a index.html -->
+            <a class="nav-logo" href="index.html">CronoBlog</a>
+            <div class="nav-buttons-right">
+                <button id="quick-settings-btn" class="nav-menu-btn" aria-label="Apri impostazioni">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+                <button id="menu-toggle-btn" class="nav-menu-btn" aria-label="Apri menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Side Menu (con menu a tendina) -->
+    <aside id="side-panel" class="side-panel">
+        <div class="panel-header">
+            <span class="panel-title">Navigazione</span>
+            <button id="close-menu-btn" class="close-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="panel-content">
+            <!-- Blocco Navigazione -->
+            <div class="list-container glass-card">
+                <ul id="side-menu-nav-list" class="settings-list">
+                    <!-- Home (Link a index.html) -->
+                    <li>
+                        <a class="list-item" href="index.html">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span class="list-label">Home</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                    
+                    <!-- Menu a Tendina Articoli (Link Esterni) -->
+                    <li class="menu-accordion">
+                        <button class="list-item menu-accordion-trigger">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            <span class="list-label">Articoli</span>
+                            <span class="list-chevron accordion-chevron">&rsaquo;</span>
+                        </button>
+                        <ul class="submenu-list">
+                             <li><a href="galaxys26ultraleaks.html">Leak Galaxy S26</a></li>
+                            <li><a href="ios26concept.html">Concept iOS 26</a></li>
+                            <li><a href="m5ultra.html">Chip M5 Ultra</a></li>
+                            <li><a href="visionpro2.html">Vision Pro 2</a></li>
+                            <li><a href="css-api-tricks.html">Nuove API CSS</a></li>
+                            <li><a href="rust-vs-go.html">Rust vs Go</a></li>
+                            <li><a href="ai-devtools.html">AI DevTools</a></li>
+                            <li><a href="metaverse-status.html">Il Metaverso è vivo?</a></li>
+                            <li><a href="qol-updates.html">QoL Updates</a></li>
+                            <li><a href="design-systems.html">Design Systems</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Impostazioni (Link Overlay) -->
+                    <li>
+                        <a class="list-item" id="open-settings-overlay-btn">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span class="list-label">Impostazioni</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Blocco Aspetto -->
+            <div class.cc-widget>
+                <span class="panel-subtitle">Aspetto</span>
+                <div class="theme-buttons">
+                    <button id="theme-btn-light" class="theme-btn" onclick="setTheme('light')" aria-label="Tema Chiaro">☀️</button>
+                    <button id="theme-btn-dark" class="theme-btn" onclick="setTheme('cronolab')" aria-label="Tema Dark">🌑</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Contenitore Toast -->
+    <div id="toaster-container"></div>
+
+    <!-- 
+      CONTENUTO PAGINA 
+      Questa è la sezione specifica per questo file.
+    -->
+    <main id="page-container">
+        
+        <!-- PAGINA ARTICOLO SINGOLO -->
+        <div id="page-post" class="page-content active">
+            <article class="post-container">
+                
+                <!-- Header Articolo -->
+                <header classs="post-header">
+                    <div class="container">
+                        <!-- Link per tornare a index.html -->
+                        <a class="back-link" href="index.html">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            Tutti gli Articoli
+                        </a>
+                        <span class="post-category">Software</span>
+                        <h1 class="post-title">iOS 26 e il Dilemma "Liquid Glass"</h1>
+                        <span class="post-meta">Scritto da CronoBlog • 15 Novembre 2025</span>
+                    </div>
+                </header>
+                
+                <!-- Contenuto Articolo -->
+                <div class="container">
+                    
+                    <!-- Immagine Principale (dal tuo link) -->
+                    <div class="post-featured-image" style="background-image: url('https://www.apple.com/newsroom/images/2025/06/apple-elevates-the-iphone-experience-with-ios-26/article/Apple-WWDC25-iOS-26-hero-250609_big.jpg.large.jpg'); background-position: center;"></div>
+                    
+                    <!-- Corpo dell'articolo -->
+                    <div class="post-content">
+                        <p>Il WWDC 2025 ha lasciato il segno. Oltre ai consueti aggiornamenti di "Apple Intelligence", la vera star (o il vero imputato, a seconda dei punti di vista) è stata la nuova direzione estetica di Apple: <strong>"Liquid Glass" (Vetro Liquido)</strong>.</p>
+                        
+                        <p>Questo nuovo linguaggio di design abbandona il look "flat" a cui eravamo abituati e introduce un'estetica fluida, iper-realistica, quasi gelatinosa, che pervade l'intero sistema operativo. I controlli si sciolgono, i widget sulla schermata di blocco (come nell'immagine qui sotto) e le icone sulla Home Screen ora hanno profondità, riflessi dinamici e animazioni fluide che imitano il vetro fuso.</p>
+
+                        <!-- Seconda Immagine (Lock screen) -->
+                        <img src="https://www.telefonino.net/app/uploads/2025/11/iOS-26-Liquid-Glass-schermata-di-blocco.jpg" alt="iOS 26 Liquid Glass Lock Screen" style="border-radius: var(--radius-md); max-width: 100%; height: auto;">
+
+                        <h2>Bellissimo, ma... Distraente?</h2>
+                        <p>Siamo onesti: l'effetto è sbalorditivo. Le demo sul palco del WWDC hanno mostrato un'interfaccia che sembra viva. Ma dopo le prime beta, una domanda serpeggia tra gli utenti e gli sviluppatori (incluso noi di CronoBlog): <strong>è troppo?</strong></p>
+
+                        <blockquote>Il "Liquid Glass" è una scelta estetica forte, forse la più forte dai tempi di iOS 7. E come tutte le scelte forti, divide. Per molti, la costante fluidità e i riflessi distraggono dall'uso quotidiano.</blockquote>
+
+                        <h2>La Nostra Richiesta: Dateci un Interruttore</h2>
+                        <p>Il punto, come sempre, è la scelta. Il design minimalista e "pulito" di iOS è sempre stato un punto di forza perché funzionale. Questo nuovo stile, per quanto tecnologicamente impressionante, rischia di sacrificare la funzionalità in nome dell'estetica.</p>
+                        
+                        <p>Ecco perché, come molti altri appassionati, la nostra richiesta ad Apple è semplice: <strong>dateci un interruttore</strong>. Vogliamo un'opzione, magari in `Impostazioni > Accessibilità > Riduci Trasparenza` o in `Display`, per disattivare il "Liquid Glass" e tornare a un'interfaccia più sobria e piatta.</p>
+
+                        <!-- Terza Immagine (Home screen) -->
+                        <img src="https://www.apple.com/newsroom/images/2025/06/apple-elevates-the-iphone-experience-with-ios-26/article/Apple-WWDC25-iOS-26-Home-Screen-customization-250609_big.jpg.large.jpg" alt="iOS 26 Home Screen" style="border-radius: var(--radius-md); max-width: 100%; height: auto;">
+
+                        <h2>Oltre il Vetro: Cos'altro c'è in iOS 26?</h2>
+                        <p>Nonostante il "Liquid Glass" abbia rubato la scena, iOS 26 porta con sé diverse novità interessanti:</p>
+                        <ul>
+                            <li><strong>Apple Intelligence 2.0:</strong> L'IA ora è proattiva, capace di gestire e automatizzare catene di comandi complesse tra più app.</li>
+                            <li><strong>Nuovo Centro di Controllo:</strong> Un design (che abbiamo già esplorato qui sul blog) ancora più modulare e aperto agli sviluppatori.</li>
+                            <li><strong>Supporto RCS:</strong> Finalmente, la messaggistica con dispositivi Android sarà meno... verde.</li>
+                        </ul>
+                        <p>iOS 26 è un passo coraggioso. Ma il suo successo a lungo termine dipenderà dalla volontà di Apple di ascoltare quella fetta di utenza che preferisce la produttività all'estetica. Speriamo in un toggle in iOS 26.1.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+    </main>
+
+    <!-- Footer (Globale) -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 CronoBlog. Un esperimento di design.</p>
+        </div>
+    </footer>
+
+    <!-- Collegamento allo Script -->
+    <script src="script.js"></script>
+    
+</body>
+</html>
