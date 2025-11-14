@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="it" data-accent-color="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CronoBlog - Design Personale</title>
+    
+    <!-- Importazione Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="cronolab">
+
+    <!-- ELEMENTI GLOBALI -->
+
+    <!-- NUOVO: Control Center Overlay -->
+    <div id="control-center-overlay" class="control-center-overlay">
+        <!-- Bottone chiusura fisso -->
+        <button id="control-center-close-btn" class="control-center-close-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        
+        <!-- Contenuto scrollabile -->
+        <div id="control-center-content" class="control-center-content">
+            
+            <!-- Griglia Control Center (Layout Riorganizzato v3.5) -->
+            <div class="cc-grid-container">
+                
+                <!-- Row 1: Colore -->
+                <div class="cc-widget col-span-4">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 12px; display: block;">Colore Principale</span>
+                    <div class="cc-color-grid" style="grid-template-columns: repeat(5, 1fr);">
+                        <button class="cc-color-btn" data-color="blue" title="Blu">
+                            <span class="cc-color-preview" style="background-color: var(--accent-blue);"></span>
+                            <span class="cc-color-label">Blu</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="purple" title="Viola">
+                            <span class="cc-color-preview" style="background-color: var(--accent-purple);"></span>
+                            <span class="cc-color-label">Viola</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="green" title="Verde">
+                            <span class="cc-color-preview" style="background-color: var(--accent-green);"></span>
+                            <span class="cc-color-label">Verde</span>
+                        </button>
+                        <button class="cc-color-btn" data-color="orange" title="Arancio">
+                            <span class="cc-color-preview" style="background-color: var(--accent-orange);"></span>
+                            <span class="cc-color-label">Arancio</span>
+                        </button>
+                         <button class="cc-color-btn" data-color="red" title="Rosso">
+                            <span class="cc-color-preview" style="background-color: var(--accent-red);"></span>
+                            <span class="cc-color-label">Rosso</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Row 2+3: Sliders e Tema -->
+                <!-- Widget Slider Luminosità (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <input type="range" min="30" max="100" value="100" class="cc-v-slider" id="cc-slider-brightness" title="Luminosità Pagina">
+                        <div class="cc-v-slider-track" style="height: 100%;"></div>
+                        <span class="cc-v-slider-icon">☀️</span>
+                    </div>
+                </div>
+                
+                <!-- Widget Slider Scala (ex-Volume) (1x2) -->
+                <div class="cc-widget row-span-2" style="padding: 0;">
+                    <div class="cc-v-slider-group" style="height: 100%;">
+                        <!-- Min 0 (Scala 1.0) Max 100 (Scala 0.7) -->
+                        <input type="range" min="0" max="100" value="0" class="cc-v-slider" id="cc-slider-scale" title="Dimensione Contenuti">
+                        <div class="cc-v-slider-track" style="height: 0%;"></div>
+                        <span class="cc-v-slider-icon">🔎</span>
+                    </div>
+                </div>
+                
+                <!-- Widget Tema (Stile iOS) (2x2) -->
+                <div class="cc-widget cc-theme-widget col-span-2 row-span-2">
+                    <span class="panel-subtitle" style="padding: 0;">Aspetto</span>
+                    <div class="theme-selector-grid">
+                        <!-- Opzione Light -->
+                        <label class="theme-preview-btn" for="theme-radio-light">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-light" name="theme-selector" value="light" class="theme-radio-input">
+                                <span class="radio-check-display">
+                                    <span class="radio-check-mark"></span>
+                                </span>
+                                <span class="radio-label">Light</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-light">
+                            </span>
+                        </label>
+                        <!-- Opzione Dark -->
+                        <label class="theme-preview-btn" for="theme-radio-dark">
+                            <div class="theme-radio-group">
+                                <input type="radio" id="theme-radio-dark" name="theme-selector" value="cronolab" class="theme-radio-input">
+                                <span class="radio-check-display">
+                                    <span class="radio-check-mark"></span>
+                                </span>
+                                <span class="radio-label">Dark</span>
+                            </div>
+                            <span class="theme-preview-img theme-preview-img-dark">
+                            </span>
+                        </label>
+                    </div>
+                    <!-- Spostato qui per bilanciare -->
+                    <div class="control-row" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--glass-border);">
+                        <label for="toggle-automatic-theme" class="control-label">Automatico</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-automatic-theme">
+                            <span class="toggle-track"></span>
+                            <span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Row 4: Controlli secondari (Riorganizzati) -->
+                <div class="cc-widget col-span-2">
+                    <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Notifiche</span>
+                     <div class="control-row">
+                        <label for="toggle-alert-mode" class="control-label">Mostra come Alert</label>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="toggle-alert-mode" checked>
+                            <span class="toggle-track"></span>
+                            <span class="toggle-thumb"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="cc-widget col-span-2">
+                     <span class="panel-subtitle" style="padding: 0; margin-bottom: 16px; display: block;">Debug</span>
+                    <div class="control-row">
+                        <label class="control-label">Test Alert</label>
+                        <button id="open-alert-btn" class="secondary-btn" style="padding: 8px 16px;">Mostra</button>
+                    </div>
+                </div>
+
+                <!-- Row 5: AI -->
+                <div class="cc-widget cc-ai-widget col-span-4">
+                    <span class="panel-subtitle" style="padding: 0;">CronoAI ✨</span>
+                    <input type="text" id="cronoai-prompt-input" class="ai-input" placeholder="Es: 'Animazioni CSS'">
+                    <button id="cronoai-generate-btn" class="primary-btn">
+                        <span class="btn-text">Genera Idee (CronoAI)</span>
+                        <div class="btn-spinner"></div>
+                    </button>
+                    <div id="cronoai-results-container">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <!-- BACKDROP (Solo per Alert e Side Menu) -->
+    <div id="backdrop" class="backdrop"></div>
+
+    <!-- NUOVO MODAL ALERT DINAMICO -->
+    <div id="alert-modal-overlay" class="modal-overlay">
+        <div class="modal-dialog glass-card">
+            <div id="alert-modal-content" class="alert-content">
+                <h3 id="alert-modal-title" class="alert-title">Titolo Alert</h3>
+                <p id="alert-modal-message" class="alert-message">Messaggio alert.</p>
+            </div>
+            <div id="alert-modal-footer" class="modal-footer">
+                <!-- Bottoni inseriti da JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR (Aggiornata con bottone settings) -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a class="nav-logo" onclick="navigateTo('home')">CronoBlog</a>
+            <div class="nav-buttons-right">
+                <button id="quick-settings-btn" class="nav-menu-btn" aria-label="Apri impostazioni">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+                <button id="menu-toggle-btn" class="nav-menu-btn" aria-label="Apri menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDE MENU (Modificato link Impostazioni) -->
+    <aside id="side-panel" class="side-panel">
+        <div class="panel-header">
+            <span class="panel-title">Navigazione</span>
+            <button id="close-menu-btn" class="close-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="panel-content">
+            <!-- Blocco Navigazione -->
+            <div class="list-container glass-card">
+                <ul id="side-menu-nav-list" class="settings-list">
+                    <li>
+                        <a class="list-item" data-page="home">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span class="list-label">Home</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="list-item" id="open-settings-overlay-btn">
+                            <svg class="list-icon" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span class="list-label">Impostazioni</span>
+                            <span class="list-chevron">&rsaquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Blocco Aspetto (solo emoji, ora sincronizzato) -->
+            <div class.cc-widget>
+                <span class="panel-subtitle">Aspetto</span>
+                <div class="theme-buttons">
+                    <button id="theme-btn-light" class="theme-btn" onclick="setTheme('light')" aria-label="Tema Chiaro">☀️</button>
+                    <button id="theme-btn-dark" class="theme-btn" onclick="setTheme('cronolab')" aria-label="Tema Dark">🌑</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- CONTENITORE TOAST -->
+    <div id="toaster-container"></div>
+
+    <!-- CONTENUTO PAGINA -->
+    <main id="page-container">
+        <!-- PAGINA 1: HOME (Default) -->
+        <div id="page-home" class="page-content active">
+            <!-- Hero -->
+            <header class="hero">
+                <div class="container">
+                    <h1 class="hero-title">CronoBlog</h1>
+                    <p class="hero-subtitle">Esplora i confini tra design e codice. Appunti, esperimenti e devlog.</p>
+                </div>
+            </header>
+            
+            <!-- Lista Articoli -->
+            <section class="content-section">
+                <div class="container">
+                    <h2 class="section-title">Articoli Recenti</h2>
+                    <div class="post-list-container">
+                        <!-- Template Articolo 1 -->
+                        <a class="post-preview-card glass-card" onclick="navigateTo('post')">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/8A4DFF/FFFFFF?text=Post+1')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Il Futuro del Glassmorphism</h3>
+                                <p class="post-preview-excerpt">Un'analisi approfondita su come il blur e la trasparenza stanno definendo la prossima generazione di UI, da VisionOS a iOS 18...</p>
+                                <span class="post-preview-meta">10 Novembre 2025 • 5 min lettura</span>
+                            </div>
+                        </a>
+                        <!-- Template Articolo 2 -->
+                        <a class="post-preview-card glass-card" onclick="navigateTo('post')">
+                            <div class="post-preview-image" style="background-image: url('https://placehold.co/400x300/34C759/FFFFFF?text=Post+2')"></div>
+                            <div class="post-preview-content">
+                                <h3 class="post-preview-title">Perché Usare Variabili CSS</h3>
+                                <p class="post-preview-excerpt">Gestire temi (chiaro, scuro, slate) non è mai stato così facile. Vediamo come il nostro Design System sfrutta la potenza delle variabili CSS...</p>
+                                <span class="post-preview-meta">8 Novembre 2025 • 8 min lettura</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGINA 2: ARTICOLO SINGOLO (Template) -->
+        <div id="page-post" class="page-content">
+            <article class="post-container">
+                <header class="post-header">
+                    <div class="container">
+                        <a class="back-link" onclick="navigateTo('home')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            Tutti gli Articoli
+                        </a>
+                        <span class="post-category">Design System</span>
+                        <h1 class="post-title">Il Futuro del Glassmorphism</h1>
+                        <span class="post-meta">Scritto da [Tuo Nome] • 10 Novembre 2025</span>
+                    </div>
+                </header>
+                <div class="container">
+                    <div class="post-featured-image" style="background-image: url('https://placehold.co/1200x600/8A4DFF/FFFFFF?text=Immagine+Articolo')"></div>
+                    <div class="post-content">
+                        <p>Questo è un template per un articolo...</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- FOOTER (Globale) -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 CronoBlog. Un esperimento di design.</p>
+        </div>
+    </footer>
+</body>
+</html>
