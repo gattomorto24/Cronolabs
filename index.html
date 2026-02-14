@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a0a0f">
+  <title>Cronolabs - Premium Snippet Hub</title>
+  <meta name="description" content="Marketplace professionale per snippet di codice premium. Widget UI, animazioni e layout con design Ultra iOS.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Animated Background Mesh -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="#" class="navbar__logo">
+      <div class="navbar__logo-icon">C</div>
+      <span>Cronolabs</span>
+    </a>
+    <div class="navbar__right">
+      <!-- Language toggle -->
+      <div class="pill-toggle" role="group" aria-label="Language selector">
+        <button class="pill-toggle__btn lang-btn active" data-lang="it" aria-label="Italiano">IT</button>
+        <button class="pill-toggle__btn lang-btn" data-lang="en" aria-label="English">EN</button>
+      </div>
+      <!-- Theme toggle -->
+      <div class="pill-toggle" role="group" aria-label="Theme selector">
+        <button class="pill-toggle__btn theme-btn active" data-theme="system" aria-label="System theme">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </button>
+        <button class="pill-toggle__btn theme-btn" data-theme="light" aria-label="Light theme">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <button class="pill-toggle__btn theme-btn" data-theme="dark" aria-label="Dark theme">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+      <a href="#marketplace" class="navbar__link">Marketplace</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__badge">Marketplace Premium</div>
+    <h1 class="hero__title">I migliori <span>Snippet</span> per il tuo progetto.</h1>
+    <p class="hero__subtitle">Sfoglia la nostra collezione curata di componenti UI premium, animazioni fluide e layout professionali.</p>
+  </section>
+
+  <!-- Marketplace Section -->
+  <section class="section" id="marketplace">
+    <div class="section__header">
+      <h2 class="section__title">Marketplace</h2>
+      <p class="section__desc">Sfoglia la nostra collezione curata di componenti premium.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Category filters"></div>
+    <div class="bento-grid" role="list"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer__text">&copy; 2026 Costruito con passione da <a href="#">Cronolabs</a>. Tutti i diritti riservati.</p>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="Widget details">
+    <div class="modal"></div>
+  </div>
+
+  <!-- Dev Mode Indicator -->
+  <div class="dev-indicator" aria-live="polite">Dev Mode</div>
+
+  <!-- Toast -->
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AUdsYSuOW4gzr0iRO5eol76xV9Z-lrPhGgLdzK2Dc8Olc1tRnD4MiLI20AuNdZ-SEy4WGkXhOU3nmRLb&currency=EUR"></script>
+  <script src="script.js"></script>
+
+  <!-- PayPal Button Container -->
+  <div id="paypal-button-container"></div>
+</body>
+</html>
